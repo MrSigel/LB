@@ -70,6 +70,39 @@ body {
     @apply rounded-2xl border border-white/10 bg-white/[0.03] p-8 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-accent/40 hover:shadow-2xl hover:shadow-black/40;
   }
 
+  /* Rechtstexte: Typografie zentral, damit die Seiten selbst lesbar bleiben.
+     (Ein prose-Plugin ist nicht installiert, prose-invert wäre wirkungslos.) */
+  .legal h2 {
+    @apply mb-4 mt-12 text-xl font-bold tracking-tight text-white sm:text-2xl;
+  }
+  .legal h3 {
+    @apply mb-3 mt-8 text-base font-semibold text-white;
+  }
+  .legal p {
+    @apply mb-4 leading-relaxed text-slate-300;
+  }
+  .legal ul {
+    @apply mb-4 list-disc space-y-2 pl-5 leading-relaxed text-slate-300;
+  }
+  .legal strong {
+    @apply font-semibold text-white;
+  }
+  .legal a {
+    @apply text-accent-light underline underline-offset-2 transition-colors hover:text-accent;
+  }
+  .legal address {
+    @apply mb-4 not-italic leading-relaxed text-slate-300;
+  }
+  .legal .lead {
+    @apply text-lg text-slate-300;
+  }
+  .legal .note {
+    @apply mb-4 border-l-2 border-accent bg-white/[0.03] px-5 py-4 text-sm text-slate-300;
+  }
+  .legal .note p:last-child {
+    @apply mb-0;
+  }
+
   /* Animierter Unterstrich für Navigationslinks */
   .nav-link {
     @apply relative text-sm font-medium text-slate-300 transition-colors hover:text-white;
