@@ -11,17 +11,47 @@ const contactDetails = [
   { Icon: PinIcon, label: "Shipka 36, 1504 Sofia", href: null },
 ];
 
-type Status = "idle" | "success";
+type Status = "idle" | "sending" | "success" | "error";
 
 export default function Contact() {
   const [status, setStatus] = useState<Status>("idle");
+  const [error, setError] = useState("");
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    // TODO: An echtes Backend / E-Mail-Service (z. B. API-Route) anbinden.
-    // Aktuell nur Frontend-Bestätigung.
-    setStatus("success");
-    e.currentTarget.reset();
+    const form = e.currentTarget;
+    const fd = new FormData(form);
+
+    setStatus("sending");
+    setError("");
+
+    try {
+      const res = await fetch("/api/kontakt", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          vorname: fd.get("vorname"),
+          nachname: fd.get("nachname"),
+          email: fd.get("email"),
+          nachricht: fd.get("nachricht"),
+          datenschutz: fd.get("datenschutz") === "on",
+          website: fd.get("website"),
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        setError(data.error ?? "Da ist etwas schiefgelaufen. Bitte versuch es erneut.");
+        setStatus("error");
+        return;
+      }
+
+      form.reset();
+      setStatus("success");
+    } catch {
+      setError("Keine Verbindung zum Server. Bist du online?");
+      setStatus("error");
+    }
   }
 
   return (
@@ -110,9 +140,19 @@ export default function Contact() {
                   </span>
                 </label>
 
-                <button type="submit" className="btn-primary w-full">
-                  Nachricht senden
-                  <ArrowRightIcon className="h-4 w-4" />
+                {/* Honeypot: für Menschen unsichtbar, Bots tragen hier ein. */}
+                <div aria-hidden="true" className="absolute left-[-9999px] top-0 h-0 w-0 overflow-hidden">
+                  <label htmlFor="website">Website (bitte frei lassen)</label>
+                  <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={status === "sending"}
+                  className="btn-primary w-full disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
+                >
+                  {status === "sending" ? "Wird gesendet …" : "Nachricht senden"}
+                  {status !== "sending" && <ArrowRightIcon className="h-4 w-4" />}
                 </button>
 
                 {status === "success" && (
@@ -122,6 +162,15 @@ export default function Contact() {
                   >
                     Danke! Deine Nachricht ist da – wir melden uns innerhalb von
                     24 Stunden.
+                  </p>
+                )}
+
+                {status === "error" && (
+                  <p
+                    role="alert"
+                    className="rounded-xl border border-white/15 bg-white/[0.04] px-4 py-3 text-sm text-slate-200"
+                  >
+                    {error}
                   </p>
                 )}
               </form>
