@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -164,60 +163,57 @@ export default function Header() {
           </button>
         </div>
 
-        <AnimatePresence>
-          {open && (
-            <motion.nav
-              ref={panelRef}
-              id="mobile-menu"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.25 }}
-              className="relative overflow-hidden border-t border-white/10 bg-base-900/95 backdrop-blur-md md:hidden"
-              aria-label="Hauptnavigation mobil"
-            >
-              {/* Eigener Scrollbereich: im Querformat passt das Menü sonst
-                  nicht auf den Schirm und der CTA wäre nicht erreichbar. */}
-              <div className="max-h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain sm:max-h-[calc(100dvh-5rem)]">
-                <div className="container-lb flex flex-col gap-1 py-4">
-                  {navLinks.map((link) => (
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      onClick={close}
-                      className={`rounded-lg px-3 py-3 text-base font-medium transition-colors hover:bg-white/5 ${
-                        pathname === link.href ? "text-accent-light" : "text-slate-200"
-                      }`}
-                    >
-                      {link.label}
-                    </Link>
-                  ))}
-                  <Link href="/kontakt" onClick={close} className="btn-primary mt-3">
-                    Kostenloses Erstgespräch
+        {/* Auf- und Zuklappen per CSS-Grid: grid-template-rows von 0fr auf 1fr
+            animiert eine Hoehe von auto, was mit max-height nicht sauber geht.
+            Das Panel bleibt montiert; invisible nimmt die Links im
+            geschlossenen Zustand aus Tab-Reihenfolge und Screenreader und
+            schaltet dank Transition erst nach dem Zuklappen. */}
+        <nav
+          ref={panelRef}
+          id="mobile-menu"
+          aria-label="Hauptnavigation mobil"
+          className={`grid overflow-hidden border-white/10 bg-base-900/95 backdrop-blur-md transition-all duration-300 ease-out md:hidden ${
+            open
+              ? "visible grid-rows-[1fr] border-t opacity-100"
+              : "invisible grid-rows-[0fr] border-t-0 opacity-0"
+          }`}
+        >
+          <div className="min-h-0">
+            {/* Eigener Scrollbereich: im Querformat passt das Menü sonst
+                nicht auf den Schirm und der CTA wäre nicht erreichbar. */}
+            <div className="max-h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain sm:max-h-[calc(100dvh-5rem)]">
+              <div className="container-lb flex flex-col gap-1 py-4">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={close}
+                    className={`rounded-lg px-3 py-3 text-base font-medium transition-colors hover:bg-white/5 ${
+                      pathname === link.href ? "text-accent-light" : "text-slate-200"
+                    }`}
+                  >
+                    {link.label}
                   </Link>
-                </div>
+                ))}
+                <Link href="/kontakt" onClick={close} className="btn-primary mt-3">
+                  Kostenloses Erstgespräch
+                </Link>
               </div>
-            </motion.nav>
-          )}
-        </AnimatePresence>
+            </div>
+          </div>
+        </nav>
       </header>
 
       {/* Muss außerhalb des Headers liegen: dessen backdrop-blur erzeugt einen
           Containing Block, in dem sich position:fixed auf den Header statt auf
           das Viewport bezieht – der Backdrop wäre sonst wirkungslos. */}
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            onClick={close}
-            aria-hidden="true"
-            className="fixed inset-0 z-40 bg-black/60 md:hidden"
-          />
-        )}
-      </AnimatePresence>
+      <div
+        onClick={close}
+        aria-hidden="true"
+        className={`fixed inset-0 z-40 bg-black/60 transition-opacity duration-200 md:hidden ${
+          open ? "opacity-100" : "pointer-events-none opacity-0"
+        }`}
+      />
     </>
   );
 }

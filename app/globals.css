@@ -66,6 +66,22 @@ html {
   animation-delay: var(--rise-delay, 0s);
 }
 
+/* Wechsel im Kundenstimmen-Karussell. React tauscht beim Wechsel den
+   key, dadurch startet die Animation neu. */
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.slide-in {
+  animation: slide-in 0.35s ease-out both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .js .reveal {
     opacity: 1;

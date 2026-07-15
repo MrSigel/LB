@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 import Reveal from "./Reveal";
 import { StarIcon, ArrowRightIcon } from "./icons";
 
@@ -88,40 +87,31 @@ export default function Testimonials() {
         {/* Karussell (Mobile) */}
         <div className="mt-12 md:hidden">
           <div className="relative min-h-[320px]">
-            {/* initial={false} unterdrueckt die Einblendung beim ersten Render.
-                Sonst kaeme die erste Stimme mit opacity:0 aus dem Server und
-                waere mobil unsichtbar, bis das Bundle geladen ist. */}
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.figure
-                key={active}
-                initial={{ opacity: 0, x: 40 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -40 }}
-                transition={{ duration: 0.35 }}
-                className="card flex flex-col"
-              >
-                <Stars rating={testimonials[active].rating} />
-                <blockquote className="mt-5 text-slate-300">
-                  „{testimonials[active].quote}"
-                </blockquote>
-                <figcaption className="mt-6 flex items-center gap-3 border-t border-white/10 pt-5">
-                  <div className="grid h-11 w-11 place-items-center rounded-full bg-accent/15 text-sm font-bold text-accent-light">
-                    {testimonials[active].name
-                      .split(" ")
-                      .map((n) => n[0])
-                      .join("")}
+            {/* Der key-Wechsel montiert die Figur neu und startet damit die
+                CSS-Animation erneut – ohne Animationsbibliothek. Die erste
+                Stimme kommt sichtbar aus dem Server. */}
+            <figure key={active} className="card slide-in flex flex-col">
+              <Stars rating={testimonials[active].rating} />
+              <blockquote className="mt-5 text-slate-300">
+                „{testimonials[active].quote}"
+              </blockquote>
+              <figcaption className="mt-6 flex items-center gap-3 border-t border-white/10 pt-5">
+                <div className="grid h-11 w-11 place-items-center rounded-full bg-accent/15 text-sm font-bold text-accent-light">
+                  {testimonials[active].name
+                    .split(" ")
+                    .map((n) => n[0])
+                    .join("")}
+                </div>
+                <div>
+                  <div className="font-semibold text-white">
+                    {testimonials[active].name}
                   </div>
-                  <div>
-                    <div className="font-semibold text-white">
-                      {testimonials[active].name}
-                    </div>
-                    <div className="text-sm text-slate-400">
-                      {testimonials[active].role}
-                    </div>
+                  <div className="text-sm text-slate-400">
+                    {testimonials[active].role}
                   </div>
-                </figcaption>
-              </motion.figure>
-            </AnimatePresence>
+                </div>
+              </figcaption>
+            </figure>
           </div>
 
           <div className="mt-6 flex items-center justify-between">

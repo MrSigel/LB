@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { animate, motion, useInView, useReducedMotion } from "framer-motion";
 import Reveal from "./Reveal";
 
 /**
@@ -17,11 +16,41 @@ const skills = [
 const DURATION = 1.1;
 const delayFor = (i: number) => 0.15 + i * 0.15;
 
+const prefersReducedMotion = () =>
+  typeof window !== "undefined" &&
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/** Feuert einmalig, sobald das Element ins Bild scrollt. */
+function useInView(ref: React.RefObject<HTMLElement>) {
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (!("IntersectionObserver" in window)) {
+      setInView(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "0px 0px -60px 0px" }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [ref]);
+
+  return inView;
+}
+
 export default function LimitSkills() {
-  const reduceMotion = useReducedMotion();
   const listRef = useRef<HTMLUListElement>(null);
   // Ein gemeinsamer Trigger für Balken und Zahl, damit beide synchron laufen.
-  const inView = useInView(listRef, { once: true, margin: "-60px" });
+  const inView = useInView(listRef);
 
   return (
     <section id="skills" className="section">
@@ -52,16 +81,12 @@ export default function LimitSkills() {
                     </span>
                   </div>
                   <div className="h-2.5 w-full overflow-hidden rounded-full bg-white/10">
-                    <motion.div
-                      className="h-full rounded-full bg-gradient-to-r from-accent to-accent-light"
-                      initial={reduceMotion ? false : { width: 0 }}
-                      animate={
-                        inView || reduceMotion ? { width: `${skill.value}%` } : {}
-                      }
-                      transition={{
-                        duration: DURATION,
-                        delay: delayFor(i),
-                        ease: "easeOut",
+                    <div
+                      className="h-full rounded-full bg-gradient-to-r from-accent to-accent-light transition-[width] ease-out"
+                      style={{
+                        width: inView ? `${skill.value}%` : 0,
+                        transitionDuration: `${DURATION}s`,
+                        transitionDelay: `${delayFor(i)}s`,
                       }}
                     />
                   </div>
@@ -85,25 +110,37 @@ function CountUp({
   start: boolean;
   delay: number;
 }) {
-  const reduceMotion = useReducedMotion();
   const [value, setValue] = useState(0);
 
   useEffect(() => {
     if (!start) return;
 
-    if (reduceMotion) {
+    if (prefersReducedMotion()) {
       setValue(to);
       return;
     }
 
-    const controls = animate(0, to, {
-      duration: DURATION,
-      delay,
-      ease: "easeOut",
-      onUpdate: (v) => setValue(Math.round(v)),
-    });
-    return () => controls.stop();
-  }, [start, to, delay, reduceMotion]);
+    let frame = 0;
+    let began = 0;
+
+    const step = (now: number) => {
+      if (!began) began = now;
+      const progress = Math.min((now - began) / (DURATION * 1000), 1);
+      // easeOut – gleicher Charakter wie die Transition des Balkens.
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setValue(Math.round(eased * to));
+      if (progress < 1) frame = requestAnimationFrame(step);
+    };
+
+    const timer = window.setTimeout(() => {
+      frame = requestAnimationFrame(step);
+    }, delay * 1000);
+
+    return () => {
+      window.clearTimeout(timer);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, [start, to, delay]);
 
   return <>{value}%</>;
 }
