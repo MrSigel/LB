@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-base-900 text-slate-200 antialiased;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Section-Container */
+@layer components {
+  .container-lb {
+    @apply mx-auto w-full max-w-6xl px-6 sm:px-8;
+  }
+
+  .section {
+    @apply py-20 sm:py-28;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-accent px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-accent/25 transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent-light hover:shadow-xl hover:shadow-accent/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-white/15 px-7 py-3.5 text-sm font-semibold text-slate-100 transition-all duration-200 hover:-translate-y-0.5 hover:border-accent/50 hover:text-white;
+  }
+
+  .card {
+    @apply rounded-2xl border border-white/10 bg-white/[0.03] p-8 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-accent/40 hover:shadow-2xl hover:shadow-black/40;
+  }
+
+  /* Animierter Unterstrich für Navigationslinks */
+  .nav-link {
+    @apply relative text-sm font-medium text-slate-300 transition-colors hover:text-white;
+  }
+  .nav-link::after {
+    @apply absolute -bottom-1 left-0 h-px w-0 bg-accent transition-all duration-300 content-[''];
+  }
+  .nav-link:hover::after {
+    @apply w-full;
+  }
+}
+
+/* Dezenter Scrollbar-Style */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
