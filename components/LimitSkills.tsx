@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { animate, motion, useInView, useReducedMotion } from "framer-motion";
 import Reveal from "./Reveal";
 
 /**
@@ -8,13 +9,19 @@ import Reveal from "./Reveal";
  * Werte spiegeln unsere Kernstärken wider und können angepasst werden.
  */
 const skills = [
-  { label: "Marketing", value: 92 },
-  { label: "Vertrieb", value: 97 },
-  { label: "Software", value: 88 },
+  { label: "Marketing", value: 99 },
+  { label: "Vertrieb", value: 99 },
+  { label: "Software", value: 99 },
 ];
+
+const DURATION = 1.1;
+const delayFor = (i: number) => 0.15 + i * 0.15;
 
 export default function LimitSkills() {
   const reduceMotion = useReducedMotion();
+  const listRef = useRef<HTMLUListElement>(null);
+  // Ein gemeinsamer Trigger für Balken und Zahl, damit beide synchron laufen.
+  const inView = useInView(listRef, { once: true, margin: "-60px" });
 
   return (
     <section id="skills" className="section">
@@ -33,26 +40,27 @@ export default function LimitSkills() {
           </Reveal>
 
           <Reveal delay={0.1}>
-            <ul className="space-y-7">
+            <ul ref={listRef} className="space-y-7">
               {skills.map((skill, i) => (
                 <li key={skill.label}>
                   <div className="mb-2 flex items-center justify-between">
                     <span className="font-semibold text-white">
                       {skill.label}
                     </span>
-                    <span className="text-sm font-medium text-accent-light">
-                      {skill.value}%
+                    <span className="text-sm font-medium tabular-nums text-accent-light">
+                      <CountUp to={skill.value} start={inView} delay={delayFor(i)} />
                     </span>
                   </div>
                   <div className="h-2.5 w-full overflow-hidden rounded-full bg-white/10">
                     <motion.div
                       className="h-full rounded-full bg-gradient-to-r from-accent to-accent-light"
                       initial={reduceMotion ? false : { width: 0 }}
-                      whileInView={{ width: `${skill.value}%` }}
-                      viewport={{ once: true, margin: "-60px" }}
+                      animate={
+                        inView || reduceMotion ? { width: `${skill.value}%` } : {}
+                      }
                       transition={{
-                        duration: 1.1,
-                        delay: 0.15 + i * 0.15,
+                        duration: DURATION,
+                        delay: delayFor(i),
                         ease: "easeOut",
                       }}
                     />
@@ -65,4 +73,37 @@ export default function LimitSkills() {
       </div>
     </section>
   );
+}
+
+/** Zählt von 0 auf den Zielwert hoch, sobald die Balken ins Bild scrollen. */
+function CountUp({
+  to,
+  start,
+  delay,
+}: {
+  to: number;
+  start: boolean;
+  delay: number;
+}) {
+  const reduceMotion = useReducedMotion();
+  const [value, setValue] = useState(0);
+
+  useEffect(() => {
+    if (!start) return;
+
+    if (reduceMotion) {
+      setValue(to);
+      return;
+    }
+
+    const controls = animate(0, to, {
+      duration: DURATION,
+      delay,
+      ease: "easeOut",
+      onUpdate: (v) => setValue(Math.round(v)),
+    });
+    return () => controls.stop();
+  }, [start, to, delay, reduceMotion]);
+
+  return <>{value}%</>;
 }
