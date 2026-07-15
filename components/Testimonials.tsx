@@ -88,7 +88,10 @@ export default function Testimonials() {
         {/* Karussell (Mobile) */}
         <div className="mt-12 md:hidden">
           <div className="relative min-h-[320px]">
-            <AnimatePresence mode="wait">
+            {/* initial={false} unterdrueckt die Einblendung beim ersten Render.
+                Sonst kaeme die erste Stimme mit opacity:0 aus dem Server und
+                waere mobil unsichtbar, bis das Bundle geladen ist. */}
+            <AnimatePresence mode="wait" initial={false}>
               <motion.figure
                 key={active}
                 initial={{ opacity: 0, x: 40 }}

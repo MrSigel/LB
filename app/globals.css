@@ -25,6 +25,54 @@ html {
   }
 }
 
+/* ---------------------------------------------------------------
+   Scroll-Reveal ohne JavaScript-Abhängigkeit.
+
+   Grundzustand ist SICHTBAR. Erst ein winziges Inline-Skript im
+   <head> setzt .js auf <html> und versteckt die Inhalte wieder –
+   also nur dann, wenn auch jemand da ist, der sie einblenden kann.
+   Ohne JS, bei einem Skriptfehler oder ohne IntersectionObserver
+   bleibt schlicht alles sichtbar.
+   --------------------------------------------------------------- */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.55s cubic-bezier(0.21, 0.47, 0.32, 0.98),
+    transform 0.55s cubic-bezier(0.21, 0.47, 0.32, 0.98);
+  transition-delay: var(--reveal-delay, 0s);
+  will-change: opacity, transform;
+}
+.js .reveal[data-revealed] {
+  opacity: 1;
+  transform: none;
+  will-change: auto;
+}
+
+/* Einblenden beim Laden (Hero) – reines CSS, läuft ab dem ersten
+   Frame und wartet auf kein Bundle. */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.rise {
+  animation: rise-in 0.55s cubic-bezier(0.21, 0.47, 0.32, 0.98) both;
+  animation-delay: var(--rise-delay, 0s);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 body {
   @apply bg-base-900 text-slate-200 antialiased;
   -webkit-font-smoothing: antialiased;

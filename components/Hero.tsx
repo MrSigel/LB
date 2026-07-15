@@ -1,13 +1,26 @@
-"use client";
-
 import Link from "next/link";
 import Image from "next/image";
-import { motion, useReducedMotion } from "framer-motion";
+import type { CSSProperties } from "react";
 import { ArrowRightIcon } from "./icons";
 
-export default function Hero() {
-  const reduceMotion = useReducedMotion();
+// ­ ist ein weiches Trennzeichen: unsichtbar, bis der Platz fehlt.
+// Ohne das ragt "Neukundengewinnung" als inline-block auf Handys unter
+// 409px Breite aus dem Bild. hyphens:auto reicht nicht – dafuer braucht
+// der Browser ein Silbentrennungs-Woerterbuch, das nicht ueberall da ist.
+const words = ["Planbare", "Neukunden­gewinnung", "für"];
 
+/** Gestaffelte Verzögerung als CSS-Variable statt per JS-Orchestrierung. */
+const riseDelay = (seconds: number) =>
+  ({ "--rise-delay": `${seconds}s` }) as CSSProperties;
+
+/**
+ * Der Hero animiert beim Laden – das ist reines CSS.
+ *
+ * Vorher lief das über framer-motion, wodurch Headline, Text und Buttons
+ * mit opacity:0 ausgeliefert wurden und erst nach dem Hydrieren erschienen.
+ * Mobil blieb der Hero dadurch sekundenlang leer, ohne JS dauerhaft.
+ */
+export default function Hero() {
   return (
     <section
       id="top"
@@ -44,56 +57,39 @@ export default function Hero() {
 
       <div className="container-lb">
         <div className="max-w-3xl">
-          <motion.h1
-            className="text-4xl font-extrabold leading-[1.08] tracking-tight text-white sm:text-6xl"
-            initial="hidden"
-            animate="visible"
-            variants={{
-              hidden: {},
-              visible: { transition: { staggerChildren: 0.06, delayChildren: 0.1 } },
-            }}
-          >
-            {["Planbare", "Neukundengewinnung", "für"].map((word, i) => (
-              <motion.span
-                key={i}
-                className="mr-[0.25em] inline-block"
-                variants={{
-                  hidden: reduceMotion ? {} : { opacity: 0, y: 24, rotateX: -40 },
-                  visible: { opacity: 1, y: 0, rotateX: 0 },
-                }}
-                transition={{ duration: 0.55, ease: [0.21, 0.47, 0.32, 0.98] }}
+          {/* hyphens-auto: "Neukundengewinnung" ist als inline-block sonst
+              nicht umbrechbar und ragt unter 409px Breite aus dem Bild.
+              Die Silbentrennung greift ueber lang="de" am <html>. */}
+          <h1 className="text-4xl font-extrabold leading-[1.08] tracking-tight text-white hyphens-auto sm:text-6xl">
+            {words.map((word, i) => (
+              <span
+                key={word}
+                className="rise mr-[0.25em] inline-block"
+                style={riseDelay(0.1 + i * 0.06)}
               >
                 {word}
-              </motion.span>
+              </span>
             ))}
-            <motion.span
-              className="inline-block bg-gradient-to-r from-accent via-accent-light to-accent bg-[length:200%_auto] bg-clip-text pb-[0.16em] text-transparent animate-text-shimmer"
-              variants={{
-                hidden: reduceMotion ? {} : { opacity: 0, y: 24 },
-                visible: { opacity: 1, y: 0 },
-              }}
-              transition={{ duration: 0.6, ease: [0.21, 0.47, 0.32, 0.98] }}
+            <span
+              className="rise inline-block bg-gradient-to-r from-accent via-accent-light to-accent bg-[length:200%_auto] bg-clip-text pb-[0.16em] text-transparent animate-text-shimmer"
+              style={riseDelay(0.1 + words.length * 0.06)}
             >
               Energievertriebe
-            </motion.span>
-          </motion.h1>
+            </span>
+          </h1>
 
-          <motion.p
-            className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-300 sm:text-xl"
-            initial={reduceMotion ? false : { opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.45 }}
+          <p
+            className="rise mt-6 max-w-2xl text-lg leading-relaxed text-slate-300 sm:text-xl"
+            style={riseDelay(0.45)}
           >
             Wir ticken anders – und das merkst du am Erfolg unserer Kunden. Wir
             sind selbst im PV-, Wärmepumpen- und Energievertrieb aktiv. Was wir
             dir raten, machen wir jeden Tag selbst.
-          </motion.p>
+          </p>
 
-          <motion.div
-            className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center"
-            initial={reduceMotion ? false : { opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
+          <div
+            className="rise mt-10 flex flex-col gap-4 sm:flex-row sm:items-center"
+            style={riseDelay(0.6)}
           >
             <Link href="/kontakt" className="btn-primary">
               Kostenloses Erstgespräch
@@ -102,7 +98,7 @@ export default function Hero() {
             <Link href="/ueber-uns" className="btn-ghost">
               Mehr über uns
             </Link>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

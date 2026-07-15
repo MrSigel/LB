@@ -1,7 +1,4 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 
 type RevealProps = {
   children: ReactNode;
@@ -14,26 +11,26 @@ type RevealProps = {
 
 /**
  * Dezenter Scroll-Reveal: fadet Inhalte beim Eintritt in den Viewport ein.
- * Respektiert prefers-reduced-motion.
+ *
+ * Bewusst ohne JavaScript-Abhängigkeit: Das Element wird nur versteckt,
+ * wenn das Inline-Skript aus dem Layout .js gesetzt hat. Fällt JS aus oder
+ * ist es noch nicht geladen, bleibt der Inhalt sichtbar – vorher hing der
+ * gesamte Text am React-Bundle und blieb mobil sekundenlang unsichtbar.
+ *
+ * Respektiert prefers-reduced-motion (siehe globals.css).
  */
 export default function Reveal({
   children,
   delay = 0,
   className,
-  as = "div",
+  as: Tag = "div",
 }: RevealProps) {
-  const reduceMotion = useReducedMotion();
-  const MotionTag = motion[as];
-
   return (
-    <MotionTag
-      className={className}
-      initial={reduceMotion ? false : { opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.55, delay, ease: [0.21, 0.47, 0.32, 0.98] }}
+    <Tag
+      className={className ? `reveal ${className}` : "reveal"}
+      style={delay ? ({ "--reveal-delay": `${delay}s` } as CSSProperties) : undefined}
     >
       {children}
-    </MotionTag>
+    </Tag>
   );
 }
