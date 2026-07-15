@@ -30,8 +30,10 @@ next-env.d.ts
 # claude
 .claude/settings.local.json
 
-# Foto-Originale im Projektstamm (Quellmaterial, verarbeitet unter public/images)
+# Originale im Projektstamm (Quellmaterial, verarbeitet unter public/images)
 /joachim.jpg
 /lisa.jpg
 /marc.jpg
 /sonja.jpg
+/limit-breakers-logo.png
+/limit-breakers-logo.svg

@@ -111,8 +111,8 @@ export default function Header() {
             <Image
               src="/images/brand/logo-white.png"
               alt="Limit Breakers"
-              width={180}
-              height={38}
+              width={640}
+              height={132}
               priority
               className="h-8 w-auto sm:h-9"
             />

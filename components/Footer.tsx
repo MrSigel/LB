@@ -42,8 +42,8 @@ export default function Footer() {
               <Image
                 src="/images/brand/logo-white.png"
                 alt="Limit Breakers"
-                width={180}
-                height={38}
+                width={640}
+                height={132}
                 className="h-9 w-auto"
               />
             </Link>
