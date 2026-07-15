@@ -37,10 +37,10 @@ export default function Competencies() {
         <Reveal>
           <div className="group relative mb-14 overflow-hidden rounded-3xl border border-white/10">
             <Image
-              src="/images/kompetenzen-energie.jpg"
-              alt="Erneuerbare Energien – Kompetenzfeld Energievertrieb"
-              width={1800}
-              height={1200}
+              src="/images/kompetenzen-neukundengewinnung.jpg"
+              alt="Windkraftanlage über einem Wald – erneuerbare Energien"
+              width={1600}
+              height={2400}
               className="h-64 w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 sm:h-80"
               sizes="(max-width: 1152px) 100vw, 1152px"
             />

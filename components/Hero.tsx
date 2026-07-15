@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRightIcon } from "./icons";
 
@@ -12,8 +13,19 @@ export default function Hero() {
       id="top"
       className="relative flex min-h-[92vh] items-center overflow-hidden pt-24"
     >
-      {/* Dezente animierte Hintergrund-Grafik: abstrakte Gradient-Shapes */}
+      {/* Hintergrundfoto + animierte Gradient-Shapes */}
       <div className="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+        <Image
+          src="/images/hero.jpg"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center"
+        />
+        {/* Overlay: links deckend für den Headline-Kontrast, rechts offen fürs Motiv */}
+        <div className="absolute inset-0 bg-gradient-to-r from-base-900 via-base-900/80 to-base-900/35" />
+        <div className="absolute inset-0 bg-gradient-to-t from-base-900/90 via-transparent to-base-900/50" />
         <div className="absolute inset-0 bg-grid-fade" />
         <div className="absolute -left-24 top-10 h-[420px] w-[420px] rounded-full bg-accent/25 blur-[120px] animate-gradient-float" />
         <div className="absolute -right-20 bottom-0 h-[460px] w-[460px] rounded-full bg-accent/15 blur-[130px] animate-gradient-float-slow" />
@@ -54,7 +66,7 @@ export default function Hero() {
               </motion.span>
             ))}
             <motion.span
-              className="inline-block bg-gradient-to-r from-accent via-accent-light to-accent bg-[length:200%_auto] bg-clip-text text-transparent animate-text-shimmer"
+              className="inline-block bg-gradient-to-r from-accent via-accent-light to-accent bg-[length:200%_auto] bg-clip-text pb-[0.16em] text-transparent animate-text-shimmer"
               variants={{
                 hidden: reduceMotion ? {} : { opacity: 0, y: 24 },
                 visible: { opacity: 1, y: 0 },

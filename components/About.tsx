@@ -10,11 +10,11 @@ export default function About() {
           <Reveal>
             <div className="group relative overflow-hidden rounded-3xl border border-white/10">
               <Image
-                src="/images/solar-photovoltaik.jpg"
-                alt="Photovoltaik-Anlage – Energievertrieb"
-                width={1400}
-                height={933}
-                className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                src="/images/about-beratung.jpg"
+                alt="Beratungsgespräch mit Kunden – Beratung mit echter Umsetzung"
+                width={1200}
+                height={1800}
+                className="h-[420px] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 sm:h-[520px]"
                 sizes="(max-width: 1024px) 90vw, 580px"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-base-900/70 via-transparent to-transparent" />
