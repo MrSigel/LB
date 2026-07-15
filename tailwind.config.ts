@@ -7,6 +7,10 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      // Zusätzliche Stufe oberhalb von 2xl (1536px) für sehr breite Monitore.
+      screens: {
+        "3xl": "1920px",
+      },
       colors: {
         // Dunkles Basis-Theme (neutrales Anthrazit/Near-Black – passend zum Logo)
         base: {

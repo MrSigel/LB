@@ -3,9 +3,9 @@ import Reveal from "./Reveal";
 import { ArrowRightIcon } from "./icons";
 
 const principles = [
-  "Wir begleiten jeden Umsetzungsschritt.",
-  "Potenziale werden aktiv genutzt.",
-  "Umsatz ist das Ziel.",
+  "Wir sind bei jedem Schritt dabei.",
+  "Wir lassen kein Potenzial liegen.",
+  "Am Ende zählt dein Umsatz.",
 ];
 
 export default function BreakBanner() {
@@ -17,7 +17,7 @@ export default function BreakBanner() {
             <div className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-accent/15 blur-[100px]" />
             <div className="relative">
               <h2 className="max-w-2xl text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                Messen Sie uns an unseren Ergebnissen
+                Miss uns an unseren Ergebnissen
               </h2>
 
               <ul className="mt-8 grid gap-4 sm:grid-cols-3">

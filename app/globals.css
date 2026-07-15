@@ -10,6 +10,21 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Wer Bewegung reduziert haben will, bekommt sie auch reduziert –
+   inklusive smooth scrolling und der Endlos-Animationen. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 body {
   @apply bg-base-900 text-slate-200 antialiased;
   -webkit-font-smoothing: antialiased;
@@ -17,8 +32,11 @@ body {
 
 /* Section-Container */
 @layer components {
+  /* Breite wächst gestaffelt mit, damit auf großen Schirmen nicht
+     übermäßig Rand entsteht. Obergrenze bleibt gesetzt, sonst werden
+     Fließtextzeilen zu lang zum Lesen. */
   .container-lb {
-    @apply mx-auto w-full max-w-6xl px-6 sm:px-8;
+    @apply mx-auto w-full max-w-6xl px-6 sm:px-8 xl:max-w-7xl 2xl:max-w-[88rem] 3xl:max-w-[100rem];
   }
 
   .section {
@@ -31,6 +49,21 @@ body {
 
   .btn-ghost {
     @apply inline-flex items-center justify-center gap-2 rounded-xl border border-white/15 px-7 py-3.5 text-sm font-semibold text-slate-100 transition-all duration-200 hover:-translate-y-0.5 hover:border-accent/50 hover:text-white;
+  }
+
+  /* Pfeil wandert beim Hover mit – gilt für alle Buttons mit Icon. */
+  .btn-primary svg,
+  .btn-ghost svg {
+    @apply transition-transform duration-200;
+  }
+  .btn-primary:hover svg,
+  .btn-ghost:hover svg {
+    @apply translate-x-1;
+  }
+
+  /* Leistungs-Tags reagieren auf Hover, statt tote Chips zu sein. */
+  .tag {
+    @apply rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-sm text-slate-300 transition-all duration-200 hover:-translate-y-0.5 hover:border-accent/40 hover:bg-accent/[0.08] hover:text-white;
   }
 
   .card {

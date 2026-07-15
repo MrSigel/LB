@@ -16,8 +16,11 @@ export default function TrustBar() {
           </p>
           <ul className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
             {fields.map(({ icon: Icon, label }) => (
-              <li key={label} className="flex items-center gap-2.5 text-slate-200">
-                <Icon className="h-5 w-5 text-accent" />
+              <li
+                key={label}
+                className="group flex cursor-default items-center gap-2.5 text-slate-200 transition-colors hover:text-white"
+              >
+                <Icon className="h-5 w-5 text-accent transition-transform duration-300 group-hover:scale-110" />
                 <span className="text-sm font-semibold">{label}</span>
               </li>
             ))}

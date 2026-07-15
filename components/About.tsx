@@ -11,9 +11,9 @@ export default function About() {
             <div className="group relative overflow-hidden rounded-3xl border border-white/10">
               <Image
                 src="/images/about-beratung.jpg"
-                alt="Beratungsgespräch mit Kunden – Beratung mit echter Umsetzung"
-                width={1200}
-                height={1800}
+                alt="Zwei Kollegen im Beratungsgespräch an einem Stehtisch"
+                width={1400}
+                height={787}
                 className="h-[420px] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 sm:h-[520px]"
                 sizes="(max-width: 1024px) 90vw, 580px"
               />
@@ -29,27 +29,22 @@ export default function About() {
               </h2>
               <div className="mt-6 space-y-5 text-lg leading-relaxed text-slate-300">
                 <p>
-                  Wir sind eine Unternehmensberatung mit echter Umsetzung und
-                  helfen Unternehmen, Neukunden systematisch, planbar und
-                  skalierbar zu gewinnen. Im PV- und Wärmepumpen-Leadgeschäft
-                  sowie im Strom- und Gas-Vertrieb sind wir selbst aktiv und
-                  wissen genau, worauf es ankommt – diese Praxiserfahrung fließt
-                  direkt in unsere Beratung ein.
+                  Wir sind eine Beratung, die selbst mit anpackt. Wir helfen dir,
+                  planbar Neukunden zu gewinnen – ohne Zufall, ohne Bauchgefühl.
+                  Im PV- und Wärmepumpen-Geschäft und im Strom- und Gasvertrieb
+                  sind wir selbst aktiv. Wir wissen also aus eigener Erfahrung,
+                  was funktioniert und was nicht.
                 </p>
                 <p>
-                  Die Digitalisierung strukturiert und beschleunigt deinen
-                  gesamten Vertrieb, während die Automatisierung wiederkehrende
-                  Aufgaben übernimmt. Online- und Offline-Maßnahmen greifen
-                  nahtlos ineinander, und wir optimieren deine komplette
-                  Wertschöpfungskette vom Lead bis zum Abschluss. So arbeitet
-                  dein Team motivierter, produktiver und zielgerichteter – und
-                  alle Erfolge sind transparent und jederzeit messbar.
+                  Wir bringen Struktur in deinen Vertrieb und automatisieren
+                  alles, was sich wiederholt. Online und offline greifen
+                  ineinander – vom ersten Lead bis zum Abschluss. Dein Team
+                  arbeitet fokussierter, und du siehst jederzeit, was es bringt.
                 </p>
               </div>
               <p className="mt-6 border-l-2 border-accent pl-5 text-lg font-medium text-white">
-                Wir bringen Struktur, Effizienz und messbares Wachstum in deinen
-                Vertrieb – mit der Power aus eigener operativer Erfahrung in
-                beiden Geschäftsbereichen.
+                Struktur, Effizienz und messbares Wachstum – aus eigener Praxis,
+                nicht aus dem Lehrbuch.
               </p>
             </div>
           </Reveal>

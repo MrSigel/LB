@@ -23,9 +23,10 @@ export default function Hero() {
           sizes="100vw"
           className="object-cover object-center"
         />
-        {/* Overlay: links deckend für den Headline-Kontrast, rechts offen fürs Motiv */}
-        <div className="absolute inset-0 bg-gradient-to-r from-base-900 via-base-900/80 to-base-900/35" />
-        <div className="absolute inset-0 bg-gradient-to-t from-base-900/90 via-transparent to-base-900/50" />
+        {/* Overlay: links deckend für den Headline-Kontrast, rechts offen fürs
+            Motiv. Zurückhaltend dosiert, weil das Foto selbst schon dunkel ist. */}
+        <div className="absolute inset-0 bg-gradient-to-r from-base-900 via-base-900/75 to-base-900/20" />
+        <div className="absolute inset-0 bg-gradient-to-t from-base-900/80 via-transparent to-base-900/30" />
         <div className="absolute inset-0 bg-grid-fade" />
         <div className="absolute -left-24 top-10 h-[420px] w-[420px] rounded-full bg-accent/25 blur-[120px] animate-gradient-float" />
         <div className="absolute -right-20 bottom-0 h-[460px] w-[460px] rounded-full bg-accent/15 blur-[130px] animate-gradient-float-slow" />
@@ -83,10 +84,9 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.45 }}
           >
-            Wir ticken anders – und das macht sich am Erfolg unserer Kunden
-            bemerkbar. Als aktiver Player im PV- und Wärmepumpen-Leadgeschäft
-            sowie im Strom- und Gas-Vertrieb bringen wir Struktur, Effizienz und
-            messbares Wachstum in deinen Vertrieb.
+            Wir ticken anders – und das merkst du am Erfolg unserer Kunden. Wir
+            sind selbst im PV-, Wärmepumpen- und Energievertrieb aktiv. Was wir
+            dir raten, machen wir jeden Tag selbst.
           </motion.p>
 
           <motion.div

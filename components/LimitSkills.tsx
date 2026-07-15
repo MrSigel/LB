@@ -33,8 +33,8 @@ export default function LimitSkills() {
                 Wofür wir stehen
               </h2>
               <p className="mt-4 text-lg leading-relaxed text-slate-300">
-                Wir stehen für Qualität und Umsetzung. Weiterentwicklung ist
-                Pflicht. Ergebnisse sichern Vorsprung.
+                Qualität und Umsetzung. Wir entwickeln uns ständig weiter – und
+                messen uns an dem, was am Ende dabei rauskommt.
               </p>
             </div>
           </Reveal>

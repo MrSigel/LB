@@ -37,7 +37,7 @@ const values = [
     text: "Wir sind die umsetzungsstarke Managementberatung, die nicht nur plant, sondern konsequent handelt. Mit innovativen Methoden, partnerschaftlichem Denken und absoluter Konsequenz schaffen wir nachhaltige Wertsteigerung für mittelständische Unternehmen und internationale Konzerne. Wir verändern Strukturen, optimieren Prozesse und bewegen Menschen Richtung Erfolg. Bei uns steht messbarer Mehrwert für unsere Kunden immer im Mittelpunkt.",
   },
   {
-    title: "Messen Sie uns an unseren Ergebnissen",
+    title: "Miss uns an unseren Ergebnissen",
     text: "Limitbreakers gibt sich nicht mit schönen Konzepten auf Papier zufrieden. Wir begleiten dich bei der Strategieentwicklung und bei jedem einzelnen Umsetzungsschritt. Wir wecken Begeisterung für Veränderung auf allen Ebenen, schöpfen das volle Potenzial deiner Mitarbeiter aus und sorgen dafür, dass du von echten, messbaren Ergebnissen und deutlichen Umsatzsteigerungen profitierst. Unsere Arbeit muss sich rechnen – Punkt.",
   },
   {

@@ -33,12 +33,11 @@ export default function Contact() {
             <Reveal>
               <div>
                 <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                  Lassen Sie uns über planbaren Vertrieb sprechen
+                  Lass uns über deinen Vertrieb sprechen
                 </h2>
                 <p className="mt-4 text-lg leading-relaxed text-slate-300">
-                  In einem kostenlosen Erstgespräch analysieren wir dein
-                  Vertriebspotenzial und zeigen konkret, wie planbare
-                  Neukundengewinnung bei dir aussehen kann.
+                  Im kostenlosen Erstgespräch schauen wir uns deinen Vertrieb an
+                  und zeigen dir konkret, wo Luft nach oben ist.
                 </p>
 
                 <ul className="mt-8 space-y-4">
@@ -47,9 +46,9 @@ export default function Contact() {
                       {href ? (
                         <a
                           href={href}
-                          className="flex items-center gap-3 text-slate-200 transition-colors hover:text-white"
+                          className="group flex items-center gap-3 text-slate-200 transition-colors hover:text-white"
                         >
-                          <span className="grid h-10 w-10 place-items-center rounded-lg bg-accent/10 text-accent">
+                          <span className="grid h-10 w-10 place-items-center rounded-lg bg-accent/10 text-accent transition-all duration-300 group-hover:scale-110 group-hover:bg-accent/20">
                             <Icon className="h-5 w-5" />
                           </span>
                           {label}
@@ -91,7 +90,7 @@ export default function Contact() {
                     rows={4}
                     required
                     className="w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-slate-100 placeholder-slate-500 outline-none transition focus:border-accent/60 focus:ring-2 focus:ring-accent/20"
-                    placeholder="Worum geht es? Erzählen Sie kurz von Ihrem Vertrieb."
+                    placeholder="Worum geht's? Erzähl kurz von deinem Vertrieb."
                   />
                 </div>
 
@@ -121,8 +120,8 @@ export default function Contact() {
                     role="status"
                     className="rounded-xl border border-accent/30 bg-accent/10 px-4 py-3 text-sm text-accent-light"
                   >
-                    Vielen Dank! Ihre Nachricht ist eingegangen – wir melden uns
-                    innerhalb von 24 Stunden.
+                    Danke! Deine Nachricht ist da – wir melden uns innerhalb von
+                    24 Stunden.
                   </p>
                 )}
               </form>

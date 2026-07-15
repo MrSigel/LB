@@ -18,8 +18,8 @@ export default function Team() {
               Die Menschen hinter Limit Breakers
             </h2>
             <p className="mt-4 text-lg text-slate-300">
-              Leistung und Verantwortung zählen. Motivation treibt Ergebnisse.
-              Respekt sichert Zusammenarbeit.
+              Bei uns arbeiten keine Berater von der Stange, sondern Leute, die
+              den Vertrieb selbst machen. Genau die sitzen dir gegenüber.
             </p>
           </div>
         </Reveal>
@@ -27,13 +27,13 @@ export default function Team() {
         <div className="mt-14 grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
           {members.map((m, i) => (
             <Reveal key={m.name} delay={i * 0.08}>
-              <article className="card h-full overflow-hidden p-0">
+              <article className="card group h-full overflow-hidden p-0">
                 <div className="relative aspect-square w-full overflow-hidden">
                   <Image
                     src={m.photo}
                     alt={`${m.name} – ${m.role}`}
                     fill
-                    className="object-cover transition-transform duration-500 hover:scale-105"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
                     sizes="(max-width: 640px) 45vw, 280px"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-base-900/60 to-transparent" />
@@ -43,6 +43,8 @@ export default function Team() {
                   <p className="mt-1 text-sm font-medium text-accent-light">
                     {m.role}
                   </p>
+                  {/* Akzentlinie wächst beim Hover aus der Mitte */}
+                  <span className="mx-auto mt-3 block h-0.5 w-0 rounded-full bg-accent transition-all duration-300 group-hover:w-10" />
                 </div>
               </article>
             </Reveal>

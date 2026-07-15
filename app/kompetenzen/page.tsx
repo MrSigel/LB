@@ -20,7 +20,7 @@ const areas = [
     title: "Marketing",
     intro:
       "Das beste Produkt nützt nichts, wenn niemand davon erfährt. In Zeiten der Digitalisierung hat sich das Einkaufsverhalten der Kunden grundlegend verändert. Wer heute erfolgreich sein will, muss die Erwartungen des Marktes nicht nur kennen – er muss sie gezielt und emotional ansprechen.",
-    goal: "Ihre Produkte und Leistungen kurz, klar und überzeugend nach außen zu tragen. Mit messbaren, planbaren Marketingkampagnen, die genau die richtigen Interessenten erreichen – und das konstant und skalierbar.",
+    goal: "Deine Produkte und Leistungen kurz, klar und überzeugend nach außen zu tragen. Mit messbaren Kampagnen, die genau die richtigen Interessenten erreichen – verlässlich, Monat für Monat.",
     outcomeLabel: "Die Folge",
     outcome:
       "Marketing ist längst kein „Nice-to-have“ mehr, sondern der entscheidende Erfolgsfaktor für mittelständische Unternehmen. Viele kämpfen jedoch mit der richtigen Positionierung und verlieren wertvolle Potenziale, weil ihre Botschaften nicht ankommen.",
@@ -64,10 +64,9 @@ export default function KompetenzenPage() {
           <div className="container-lb">
             <Reveal>
               <p className="max-w-3xl text-lg leading-relaxed text-slate-300">
-                Gemeinsam setzen wir wirkungsvolle Lösungen für die gesamte
-                Wertschöpfungskette unserer Kunden um – damit die Mitarbeiter
-                Ihres Unternehmens motiviert und produktiv arbeiten und Sie die
-                Erfolge messen können. Erleben Sie geballte Kompetenz, wenn es um
+                Wir setzen gemeinsam mit dir um – vom ersten Lead bis zum
+                Abschluss. Dein Team arbeitet motivierter und produktiver, und du
+                kannst die Erfolge messen. Erleb geballte Kompetenz, wenn es um
                 den Vertrieb erneuerbarer Energien geht.
               </p>
             </Reveal>

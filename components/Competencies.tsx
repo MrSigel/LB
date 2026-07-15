@@ -6,17 +6,17 @@ const items = [
   {
     icon: EnergyIcon,
     title: "Energie-Leadgeschäft",
-    text: "Als aktiver Player im PV- und Wärmepumpen-Leadgeschäft sowie im Strom- und Gas-Vertrieb wissen wir genau, was wirklich funktioniert – und gewinnen Leads mit echtem Abschlusspotenzial.",
+    text: "Wir sind selbst im PV-, Wärmepumpen- und Energievertrieb unterwegs. Deshalb wissen wir, welche Leads wirklich zum Abschluss führen – und welche nur die Statistik schön machen.",
   },
   {
     icon: DigitalIcon,
     title: "Digitalisierung",
-    text: "Wir strukturieren und beschleunigen deinen gesamten Vertrieb. Online- und Offline-Maßnahmen greifen nahtlos ineinander, alle Erfolge sind transparent und jederzeit messbar.",
+    text: "Wir bringen Tempo und Struktur in deinen Vertrieb. Online und offline greifen ineinander, und du siehst jederzeit schwarz auf weiß, was funktioniert.",
   },
   {
     icon: AutomationIcon,
     title: "Automatisierung",
-    text: "Wir automatisieren alles, was wiederkehrt, und optimieren die komplette Wertschöpfungskette vom Lead bis zum Abschluss. Dein Vertrieb wird schneller, schlanker und effektiver.",
+    text: "Alles, was sich wiederholt, übernimmt die Technik – vom ersten Lead bis zum Abschluss. Dein Vertrieb wird schneller und schlanker, dein Team hat den Kopf frei für Kunden.",
   },
 ];
 
@@ -38,9 +38,9 @@ export default function Competencies() {
           <div className="group relative mb-14 overflow-hidden rounded-3xl border border-white/10">
             <Image
               src="/images/kompetenzen-neukundengewinnung.jpg"
-              alt="Windkraftanlage über einem Wald – erneuerbare Energien"
-              width={1600}
-              height={2400}
+              alt="Zwei Personen im Gespräch in einem Besprechungsbereich"
+              width={1800}
+              height={1200}
               className="h-64 w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 sm:h-80"
               sizes="(max-width: 1152px) 100vw, 1152px"
             />
@@ -76,10 +76,7 @@ export default function Competencies() {
         <Reveal delay={0.15}>
           <ul className="mt-10 flex flex-wrap gap-3">
             {services.map((s) => (
-              <li
-                key={s}
-                className="rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-sm text-slate-300"
-              >
+              <li key={s} className="tag">
                 {s}
               </li>
             ))}
