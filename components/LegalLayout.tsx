@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "./AppLink";
 import type { ReactNode } from "react";
 import Header from "./Header";
 import Footer from "./Footer";

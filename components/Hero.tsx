@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "./AppLink";
 import Image from "next/image";
 import type { CSSProperties } from "react";
 import { ArrowRightIcon } from "./icons";
