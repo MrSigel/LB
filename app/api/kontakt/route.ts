@@ -10,7 +10,9 @@ export const runtime = "nodejs";
 const LIMITS = { vorname: 80, nachname: 80, email: 254, nachricht: 5000 };
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-type Body = Partial<Record<keyof ContactPayload | "datenschutz" | "website", unknown>>;
+type Body = Partial<
+  Record<keyof ContactPayload | "datenschutz" | "website" | "locale", unknown>
+>;
 
 function validate(body: Body): { data: ContactPayload } | { error: string } {
   const get = (k: keyof ContactPayload) =>
@@ -24,11 +26,11 @@ function validate(body: Body): { data: ContactPayload } | { error: string } {
   };
 
   for (const [key, max] of Object.entries(LIMITS) as [keyof ContactPayload, number][]) {
-    if (!data[key]) return { error: "Bitte fülle alle Felder aus." };
-    if (data[key].length > max) return { error: "Eine der Angaben ist zu lang." };
+    if (!data[key]) return { error: "fields" };
+    if (data[key].length > max) return { error: "toolong" };
   }
-  if (!EMAIL_RE.test(data.email)) return { error: "Diese E-Mail-Adresse sieht nicht gültig aus." };
-  if (body.datenschutz !== true) return { error: "Bitte stimme der Datenschutzerklärung zu." };
+  if (!EMAIL_RE.test(data.email)) return { error: "email" };
+  if (body.datenschutz !== true) return { error: "privacy" };
 
   return { data };
 }
@@ -52,7 +54,7 @@ export async function POST(request: Request) {
   try {
     body = await request.json();
   } catch {
-    return NextResponse.json({ error: "Ungültige Anfrage." }, { status: 400 });
+    return NextResponse.json({ error: "invalid" }, { status: 400 });
   }
 
   // Honeypot: echte Menschen sehen dieses Feld nicht, Bots füllen es aus.
@@ -70,12 +72,13 @@ export async function POST(request: Request) {
   if (!transport) {
     console.error("[kontakt] SMTP nicht konfiguriert – siehe .env.example");
     return NextResponse.json(
-      { error: "Der Mailversand ist derzeit nicht eingerichtet. Bitte schreib uns direkt an info@limit-breakers.eu." },
+      { error: "notconfigured" },
       { status: 503 }
     );
   }
 
-  const { subject, html, text } = buildContactEmail(data, new Date());
+  const locale = typeof body.locale === "string" ? body.locale : "de";
+  const { subject, html, text } = buildContactEmail(data, new Date(), locale);
   const logo = await readFile(
     path.join(process.cwd(), "public", "images", "brand", "logo-white.png")
   );
@@ -108,7 +111,7 @@ export async function POST(request: Request) {
     // Details bleiben im Server-Log, der Client bekommt keine SMTP-Interna.
     console.error("[kontakt] Versand fehlgeschlagen:", err);
     return NextResponse.json(
-      { error: "Die Nachricht konnte nicht gesendet werden. Bitte versuch es später erneut." },
+      { error: "send" },
       { status: 502 }
     );
   }

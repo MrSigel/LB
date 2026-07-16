@@ -1,12 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-
-const skills = [
-  { label: "Marketing", value: 99 },
-  { label: "Vertrieb", value: 99 },
-  { label: "Software", value: 99 },
-];
+import type { Dictionary } from "@/lib/i18n/dictionaries";
 
 const DURATION = 1.1;
 const delayFor = (i: number) => 0.15 + i * 0.15;
@@ -46,9 +41,19 @@ function useInView(ref: React.RefObject<HTMLElement>) {
  * Client-Insel: nur die Balken zaehlen hoch und wachsen. Ueberschrift und
  * Text der Sektion sind statisch (siehe LimitSkills).
  */
-export default function SkillBars() {
+export default function SkillBars({
+  labels,
+}: {
+  labels: Dictionary["skills"]["labels"];
+}) {
   const listRef = useRef<HTMLUListElement>(null);
   const inView = useInView(listRef);
+
+  const skills = [
+    { label: labels.marketing, value: 99 },
+    { label: labels.sales, value: 99 },
+    { label: labels.software, value: 99 },
+  ];
 
   return (
     <ul ref={listRef} className="space-y-7">

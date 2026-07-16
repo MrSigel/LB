@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { site } from "@/lib/site";
+import { locales } from "@/lib/i18n/config";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -7,8 +8,15 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        // Rechtstexte und die Formular-Route gehoeren nicht in den Index.
-        disallow: ["/api/", "/impressum", "/datenschutz", "/agb"],
+        // Formular-Route und Rechtstexte (in allen Sprachen) bleiben draussen.
+        disallow: [
+          "/api/",
+          ...locales.flatMap((l) => [
+            `/${l}/impressum`,
+            `/${l}/datenschutz`,
+            `/${l}/agb`,
+          ]),
+        ],
       },
     ],
     sitemap: `${site.url}/sitemap.xml`,

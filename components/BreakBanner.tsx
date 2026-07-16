@@ -1,14 +1,16 @@
 import Link from "./AppLink";
 import Reveal from "./Reveal";
 import { ArrowRightIcon } from "./icons";
+import type { Locale } from "@/lib/i18n/config";
+import type { Dictionary } from "@/lib/i18n/dictionaries";
 
-const principles = [
-  "Wir sind bei jedem Schritt dabei.",
-  "Wir lassen kein Potenzial liegen.",
-  "Am Ende zählt dein Umsatz.",
-];
-
-export default function BreakBanner() {
+export default function BreakBanner({
+  locale,
+  t,
+}: {
+  locale: Locale;
+  t: Dictionary["breakBanner"];
+}) {
   return (
     <section className="section">
       <div className="container-lb">
@@ -17,11 +19,11 @@ export default function BreakBanner() {
             <div className="glow-accent-soft pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full" />
             <div className="relative">
               <h2 className="max-w-2xl text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                Miss uns an unseren Ergebnissen
+                {t.title}
               </h2>
 
               <ul className="mt-8 grid gap-4 sm:grid-cols-3">
-                {principles.map((p) => (
+                {t.principles.map((p) => (
                   <li
                     key={p}
                     className="flex items-start gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-5 text-slate-200"
@@ -34,8 +36,8 @@ export default function BreakBanner() {
                 ))}
               </ul>
 
-              <Link href="/kontakt" className="btn-primary mt-10">
-                Jetzt Erstgespräch sichern
+              <Link href={`/${locale}/kontakt`} className="btn-primary mt-10">
+                {t.cta}
                 <ArrowRightIcon className="h-4 w-4" />
               </Link>
             </div>

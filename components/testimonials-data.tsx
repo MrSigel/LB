@@ -1,31 +1,34 @@
 import { StarIcon } from "./icons";
+import type { Dictionary } from "@/lib/i18n/dictionaries";
 
-/** Echte Kundenstimmen von limit-breakers.eu. */
-export const testimonials = [
-  {
-    name: "Anja Hasenberg",
-    role: "Kundin",
-    rating: 5,
-    quote:
-      "Die Zusammenarbeit mit den Limitbreakers hat mir gezeigt, was Professionalität gepaart mit Zuverlässigkeit bedeutet. Ich fühle mich sehr willkommen und gut beraten. Alle meine Wünsche wurden umgesetzt.",
-  },
-  {
-    name: "Tim Fuhr",
-    role: "Kunde",
-    rating: 5,
-    quote:
-      "Kann das Team der Limitbreakers nur weiterempfehlen. Herr Klaus ist auf alle unsere Wünsche eingegangen, Probleme wurden schnell gelöst. Die Kommunikation war super angenehm.",
-  },
-  {
-    name: "Roxy Cann",
-    role: "Kundin",
-    rating: 5,
-    quote:
-      "Meine Wünsche und Probleme wurden sofort gelöst – toller Service! Schnelle Umsetzung und ein Mega Team!",
-  },
+/**
+ * Echte Kundenstimmen von limit-breakers.eu.
+ *
+ * Hier stehen nur die nicht uebersetzbaren Angaben. Die Zitate und die
+ * Rollenbezeichnung kommen aus dem Woerterbuch – die Reihenfolge muss
+ * dort mit dieser Liste uebereinstimmen.
+ */
+const people = [
+  { name: "Anja Hasenberg", rating: 5, female: true },
+  { name: "Tim Fuhr", rating: 5, female: false },
+  { name: "Roxy Cann", rating: 5, female: true },
 ];
 
-export type Testimonial = (typeof testimonials)[number];
+export type Testimonial = {
+  name: string;
+  role: string;
+  rating: number;
+  quote: string;
+};
+
+/** Fuegt Namen und uebersetzte Zitate zusammen. */
+export const buildTestimonials = (t: Dictionary["testimonials"]): Testimonial[] =>
+  people.map((p, i) => ({
+    name: p.name,
+    role: p.female ? t.roleFemale : t.roleMale,
+    rating: p.rating,
+    quote: t.quotes[i],
+  }));
 
 export const initials = (name: string) =>
   name
@@ -33,9 +36,9 @@ export const initials = (name: string) =>
     .map((n) => n[0])
     .join("");
 
-export function Stars({ rating }: { rating: number }) {
+export function Stars({ rating, label }: { rating: number; label: string }) {
   return (
-    <div className="flex gap-1" role="img" aria-label={`Bewertung: ${rating} von 5 Sternen`}>
+    <div className="flex gap-1" role="img" aria-label={label}>
       {Array.from({ length: 5 }).map((_, i) => (
         <StarIcon
           key={i}

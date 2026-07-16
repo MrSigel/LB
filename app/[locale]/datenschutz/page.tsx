@@ -1,14 +1,29 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { isLocale } from "@/lib/i18n/config";
+import { getDictionary } from "@/lib/i18n/dictionaries";
 import LegalLayout from "@/components/LegalLayout";
-
-export const metadata: Metadata = {
-  title: "Datenschutzerklärung",
-  robots: { index: false, follow: true },
-};
-
-export default function DatenschutzPage() {
+export async function generateMetadata({
+  params,
+}: {
+  params: { locale: string };
+}): Promise<Metadata> {
+  if (!isLocale(params.locale)) return {};
+  const d = await getDictionary(params.locale);
+  // Rechtstexte gehoeren nicht in den Suchindex.
+  return { title: d.meta.privacy.title, robots: { index: false, follow: true } };
+}
+export default async function Page({ params }: { params: { locale: string } }) {
+  if (!isLocale(params.locale)) notFound();
+  const locale = params.locale;
+  const d = await getDictionary(locale);
   return (
-    <LegalLayout title="Datenschutzerklärung" intro="Stand: Juli 2026">
+    <LegalLayout
+      locale={locale}
+      dict={d}
+      title={"Datenschutzerklärung"}
+      intro={"Stand: Juli 2026"}
+    >
       <h2>Verantwortliche Stelle</h2>
       <p>Verantwortliche Stelle im Sinne der Datenschutzgesetze ist:</p>
       <address>

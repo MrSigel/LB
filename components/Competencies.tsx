@@ -1,35 +1,15 @@
 import Image from "next/image";
 import Reveal from "./Reveal";
 import { EnergyIcon, DigitalIcon, AutomationIcon } from "./icons";
+import type { Dictionary } from "@/lib/i18n/dictionaries";
 
-const items = [
-  {
-    icon: EnergyIcon,
-    title: "Energie-Leadgeschäft",
-    text: "Wir sind selbst im PV-, Wärmepumpen- und Energievertrieb unterwegs. Deshalb wissen wir, welche Leads wirklich zum Abschluss führen – und welche nur die Statistik schön machen.",
-  },
-  {
-    icon: DigitalIcon,
-    title: "Digitalisierung",
-    text: "Wir bringen Tempo und Struktur in deinen Vertrieb. Online und offline greifen ineinander, und du siehst jederzeit schwarz auf weiß, was funktioniert.",
-  },
-  {
-    icon: AutomationIcon,
-    title: "Automatisierung",
-    text: "Alles, was sich wiederholt, übernimmt die Technik – vom ersten Lead bis zum Abschluss. Dein Vertrieb wird schneller und schlanker, dein Team hat den Kopf frei für Kunden.",
-  },
-];
+export default function Competencies({ t }: { t: Dictionary["competencies"] }) {
+  const items = [
+    { icon: EnergyIcon, ...t.items.leads },
+    { icon: DigitalIcon, ...t.items.digital },
+    { icon: AutomationIcon, ...t.items.automation },
+  ];
 
-const services = [
-  "Systematische Neukundengewinnung",
-  "PV-Leadgeschäft",
-  "Wärmepumpen-Leadgeschäft",
-  "Strom- & Gas-Vertrieb",
-  "Vertriebsprozessoptimierung",
-  "Lead-to-Abschluss Wertschöpfungskette",
-];
-
-export default function Competencies() {
   return (
     <section id="kompetenzen" className="section">
       <div className="container-lb">
@@ -38,7 +18,7 @@ export default function Competencies() {
           <div className="group relative mb-14 overflow-hidden rounded-3xl border border-white/10">
             <Image
               src="/images/kompetenzen-neukundengewinnung.jpg"
-              alt="Zwei Personen im Gespräch in einem Besprechungsbereich"
+              alt={t.bannerAlt}
               width={1800}
               height={1200}
               className="h-64 w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 sm:h-80"
@@ -48,7 +28,7 @@ export default function Competencies() {
             <div className="absolute inset-0 flex items-center p-8 sm:p-12">
               <div className="max-w-xl">
                 <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                  Systematische Neukundengewinnung für Energievertriebe
+                  {t.bannerTitle}
                 </h2>
               </div>
             </div>
@@ -75,7 +55,7 @@ export default function Competencies() {
         {/* Leistungs-Tags */}
         <Reveal delay={0.15}>
           <ul className="mt-10 flex flex-wrap gap-3">
-            {services.map((s) => (
+            {t.services.map((s) => (
               <li key={s} className="tag">
                 {s}
               </li>

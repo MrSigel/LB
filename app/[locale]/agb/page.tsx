@@ -1,16 +1,28 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { isLocale } from "@/lib/i18n/config";
+import { getDictionary } from "@/lib/i18n/dictionaries";
 import LegalLayout from "@/components/LegalLayout";
-
-export const metadata: Metadata = {
-  title: "AGB & Widerruf",
-  robots: { index: false, follow: true },
-};
-
-export default function AgbPage() {
+export async function generateMetadata({
+  params,
+}: {
+  params: { locale: string };
+}): Promise<Metadata> {
+  if (!isLocale(params.locale)) return {};
+  const d = await getDictionary(params.locale);
+  // Rechtstexte gehoeren nicht in den Suchindex.
+  return { title: d.meta.terms.title, robots: { index: false, follow: true } };
+}
+export default async function Page({ params }: { params: { locale: string } }) {
+  if (!isLocale(params.locale)) notFound();
+  const locale = params.locale;
+  const d = await getDictionary(locale);
   return (
     <LegalLayout
-      title="Allgemeine Geschäftsbedingungen für das Limitbreakers Leadprogramm"
-      intro="Stand: Januar 2026"
+      locale={locale}
+      dict={d}
+      title={"Allgemeine Geschäftsbedingungen für das Limitbreakers Leadprogramm"}
+      intro={"Stand: Januar 2026"}
     >
       <p className="lead">
         Mit der Bestellung von Leads über das Limitbreakers Leadprogramm

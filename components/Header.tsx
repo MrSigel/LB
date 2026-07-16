@@ -4,20 +4,29 @@ import Image from "next/image";
 import Link from "./AppLink";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
+import LanguageSwitcher from "./LanguageSwitcher";
+import type { Locale } from "@/lib/i18n/config";
+import type { Dictionary } from "@/lib/i18n/dictionaries";
 
-const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/ueber-uns", label: "Über uns" },
-  { href: "/kompetenzen", label: "Kompetenzen" },
-  { href: "/kontakt", label: "Kontakt" },
-];
-
-export default function Header() {
+export default function Header({
+  locale,
+  t,
+}: {
+  locale: Locale;
+  t: Dictionary["nav"];
+}) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const toggleRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLElement>(null);
+
+  const navLinks = [
+    { href: `/${locale}`, label: t.home },
+    { href: `/${locale}/ueber-uns`, label: t.about },
+    { href: `/${locale}/kompetenzen`, label: t.competencies },
+    { href: `/${locale}/kontakt`, label: t.contact },
+  ];
 
   const close = useCallback(() => setOpen(false), []);
 
@@ -77,7 +86,7 @@ export default function Header() {
 
       const items = [
         toggle,
-        ...Array.from(panel.querySelectorAll<HTMLElement>("a[href]")),
+        ...Array.from(panel.querySelectorAll<HTMLElement>("a[href], button")),
       ];
       const index = items.indexOf(document.activeElement as HTMLElement);
 
@@ -100,8 +109,7 @@ export default function Header() {
     <>
       {/* Kein backdrop-blur: der Header ist fixed ueber scrollendem Inhalt,
           der Filter muesste also bei jedem Scroll-Frame neu berechnet werden.
-          Auf Handy-GPUs (besonders Safari) ist das dauerhaft teuer. Ein fast
-          deckender Hintergrund sieht praktisch gleich aus und kostet nichts. */}
+          Auf Handy-GPUs (besonders Safari) ist das dauerhaft teuer. */}
       <header
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
           scrolled || open
@@ -110,7 +118,7 @@ export default function Header() {
         }`}
       >
         <div className="container-lb flex h-16 items-center justify-between sm:h-20">
-          <Link href="/" className="flex items-center" aria-label="Limit Breakers – Startseite">
+          <Link href={`/${locale}`} className="flex items-center" aria-label={t.home_aria}>
             <Image
               src="/images/brand/logo-white.png"
               alt="Limit Breakers"
@@ -121,7 +129,7 @@ export default function Header() {
             />
           </Link>
 
-          <nav className="hidden items-center gap-8 md:flex" aria-label="Hauptnavigation">
+          <nav className="hidden items-center gap-8 md:flex" aria-label={t.mainNav}>
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -133,49 +141,53 @@ export default function Header() {
             ))}
           </nav>
 
-          <Link href="/kontakt" className="btn-primary hidden px-5 py-2.5 text-xs md:inline-flex">
-            Erstgespräch
-          </Link>
+          <div className="hidden items-center gap-3 md:flex">
+            <LanguageSwitcher locale={locale} label={t.languageChange} />
+            <Link href={`/${locale}/kontakt`} className="btn-primary px-5 py-2.5 text-xs">
+              {t.cta}
+            </Link>
+          </div>
 
-          {/* Mobile-Menü-Button */}
-          <button
-            ref={toggleRef}
-            type="button"
-            onClick={() => setOpen((v) => !v)}
-            className="relative z-50 flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 transition-colors hover:border-accent/50 md:hidden"
-            aria-label={open ? "Menü schließen" : "Menü öffnen"}
-            aria-expanded={open}
-            aria-controls="mobile-menu"
-          >
-            <span className="relative block h-4 w-5">
-              <span
-                className={`absolute left-0 block h-0.5 w-5 bg-white transition-all duration-300 ${
-                  open ? "top-1/2 -translate-y-1/2 rotate-45" : "top-0"
-                }`}
-              />
-              <span
-                className={`absolute left-0 top-1/2 block h-0.5 w-5 -translate-y-1/2 bg-white transition-all duration-300 ${
-                  open ? "opacity-0" : "opacity-100"
-                }`}
-              />
-              <span
-                className={`absolute left-0 block h-0.5 w-5 bg-white transition-all duration-300 ${
-                  open ? "top-1/2 -translate-y-1/2 -rotate-45" : "bottom-0"
-                }`}
-              />
-            </span>
-          </button>
+          {/* Mobil: Sprache bleibt neben dem Menü-Button sichtbar, damit sie
+              nicht erst hinter dem Menü gefunden werden muss. */}
+          <div className="flex items-center gap-2 md:hidden">
+            <LanguageSwitcher locale={locale} label={t.languageChange} />
+            <button
+              ref={toggleRef}
+              type="button"
+              onClick={() => setOpen((v) => !v)}
+              className="relative z-50 flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 transition-colors hover:border-accent/50"
+              aria-label={open ? t.menuClose : t.menuOpen}
+              aria-expanded={open}
+              aria-controls="mobile-menu"
+            >
+              <span className="relative block h-4 w-5">
+                <span
+                  className={`absolute left-0 block h-0.5 w-5 bg-white transition-all duration-300 ${
+                    open ? "top-1/2 -translate-y-1/2 rotate-45" : "top-0"
+                  }`}
+                />
+                <span
+                  className={`absolute left-0 top-1/2 block h-0.5 w-5 -translate-y-1/2 bg-white transition-all duration-300 ${
+                    open ? "opacity-0" : "opacity-100"
+                  }`}
+                />
+                <span
+                  className={`absolute left-0 block h-0.5 w-5 bg-white transition-all duration-300 ${
+                    open ? "top-1/2 -translate-y-1/2 -rotate-45" : "bottom-0"
+                  }`}
+                />
+              </span>
+            </button>
+          </div>
         </div>
 
         {/* Auf- und Zuklappen per CSS-Grid: grid-template-rows von 0fr auf 1fr
-            animiert eine Hoehe von auto, was mit max-height nicht sauber geht.
-            Das Panel bleibt montiert; invisible nimmt die Links im
-            geschlossenen Zustand aus Tab-Reihenfolge und Screenreader und
-            schaltet dank Transition erst nach dem Zuklappen. */}
+            animiert eine Hoehe von auto, was mit max-height nicht sauber geht. */}
         <nav
           ref={panelRef}
           id="mobile-menu"
-          aria-label="Hauptnavigation mobil"
+          aria-label={t.mobileNav}
           className={`grid overflow-hidden border-white/10 bg-base-900 transition-all duration-300 ease-out md:hidden ${
             open
               ? "visible grid-rows-[1fr] border-t opacity-100"
@@ -183,8 +195,6 @@ export default function Header() {
           }`}
         >
           <div className="min-h-0">
-            {/* Eigener Scrollbereich: im Querformat passt das Menü sonst
-                nicht auf den Schirm und der CTA wäre nicht erreichbar. */}
             <div className="max-h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain sm:max-h-[calc(100dvh-5rem)]">
               <div className="container-lb flex flex-col gap-1 py-4">
                 {navLinks.map((link) => (
@@ -199,8 +209,8 @@ export default function Header() {
                     {link.label}
                   </Link>
                 ))}
-                <Link href="/kontakt" onClick={close} className="btn-primary mt-3">
-                  Kostenloses Erstgespräch
+                <Link href={`/${locale}/kontakt`} onClick={close} className="btn-primary mt-3">
+                  {t.cta}
                 </Link>
               </div>
             </div>
@@ -208,9 +218,8 @@ export default function Header() {
         </nav>
       </header>
 
-      {/* Muss außerhalb des Headers liegen: dessen backdrop-blur erzeugt einen
-          Containing Block, in dem sich position:fixed auf den Header statt auf
-          das Viewport bezieht – der Backdrop wäre sonst wirkungslos. */}
+      {/* Muss außerhalb des Headers liegen: dessen Containing Block wuerde
+          position:fixed sonst auf den Header statt aufs Viewport beziehen. */}
       <div
         onClick={close}
         aria-hidden="true"

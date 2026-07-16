@@ -41,12 +41,11 @@ export const site = {
  * wa.me erwartet die Nummer international ohne "+" und ohne führende Null:
  * 0151 52400463 -> 49 151 52400463.
  */
-const whatsappNumber = "4915152400463";
-const whatsappText =
-  "Hallo, ich habe mich auf deiner Website umgeschaut und möchte mit dir im Kontakt treten.";
-
 export const whatsapp = {
-  number: whatsappNumber,
+  number: "4915152400463",
   display: "+49 151 52400463",
-  href: `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappText)}`,
 } as const;
+
+/** Baut den wa.me-Link mit vorbefuellter Nachricht in der jeweiligen Sprache. */
+export const whatsappHref = (message: string) =>
+  `https://wa.me/${whatsapp.number}?text=${encodeURIComponent(message)}`;

@@ -1,7 +1,8 @@
 import Image from "next/image";
 import Reveal from "./Reveal";
+import type { Dictionary } from "@/lib/i18n/dictionaries";
 
-export default function About() {
+export default function About({ t }: { t: Dictionary["about"] }) {
   return (
     <section id="ueber-uns" className="section">
       <div className="container-lb">
@@ -11,7 +12,7 @@ export default function About() {
             <div className="group relative overflow-hidden rounded-3xl border border-white/10">
               <Image
                 src="/images/about-beratung.jpg"
-                alt="Zwei Kollegen im Beratungsgespräch an einem Stehtisch"
+                alt={t.imageAlt}
                 width={1400}
                 height={787}
                 className="h-[420px] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 sm:h-[520px]"
@@ -25,26 +26,14 @@ export default function About() {
           <Reveal delay={0.1}>
             <div>
               <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                Beratung mit echter Umsetzung
+                {t.title}
               </h2>
               <div className="mt-6 space-y-5 text-lg leading-relaxed text-slate-300">
-                <p>
-                  Wir sind eine Beratung, die selbst mit anpackt. Wir helfen dir,
-                  planbar Neukunden zu gewinnen – ohne Zufall, ohne Bauchgefühl.
-                  Im PV- und Wärmepumpen-Geschäft und im Strom- und Gasvertrieb
-                  sind wir selbst aktiv. Wir wissen also aus eigener Erfahrung,
-                  was funktioniert und was nicht.
-                </p>
-                <p>
-                  Wir bringen Struktur in deinen Vertrieb und automatisieren
-                  alles, was sich wiederholt. Online und offline greifen
-                  ineinander – vom ersten Lead bis zum Abschluss. Dein Team
-                  arbeitet fokussierter, und du siehst jederzeit, was es bringt.
-                </p>
+                <p>{t.p1}</p>
+                <p>{t.p2}</p>
               </div>
               <p className="mt-6 border-l-2 border-accent pl-5 text-lg font-medium text-white">
-                Struktur, Effizienz und messbares Wachstum – aus eigener Praxis,
-                nicht aus dem Lehrbuch.
+                {t.quote}
               </p>
             </div>
           </Reveal>

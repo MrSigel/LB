@@ -2,12 +2,8 @@ import Link from "./AppLink";
 import Image from "next/image";
 import type { CSSProperties } from "react";
 import { ArrowRightIcon } from "./icons";
-
-// ­ ist ein weiches Trennzeichen: unsichtbar, bis der Platz fehlt.
-// Ohne das ragt "Neukundengewinnung" als inline-block auf Handys unter
-// 409px Breite aus dem Bild. hyphens:auto reicht nicht – dafuer braucht
-// der Browser ein Silbentrennungs-Woerterbuch, das nicht ueberall da ist.
-const words = ["Planbare", "Neukunden­gewinnung", "für"];
+import type { Locale } from "@/lib/i18n/config";
+import type { Dictionary } from "@/lib/i18n/dictionaries";
 
 /** Gestaffelte Verzögerung als CSS-Variable statt per JS-Orchestrierung. */
 const riseDelay = (seconds: number) =>
@@ -18,15 +14,20 @@ const riseDelay = (seconds: number) =>
  *
  * Vorher lief das über framer-motion, wodurch Headline, Text und Buttons
  * mit opacity:0 ausgeliefert wurden und erst nach dem Hydrieren erschienen.
- * Mobil blieb der Hero dadurch sekundenlang leer, ohne JS dauerhaft.
  */
-export default function Hero() {
+export default function Hero({
+  locale,
+  t,
+}: {
+  locale: Locale;
+  t: Dictionary["hero"];
+}) {
   return (
     <section
       id="top"
       className="relative flex min-h-[92vh] items-center overflow-hidden pt-24"
     >
-      {/* Hintergrundfoto + animierte Gradient-Shapes */}
+      {/* Hintergrundfoto + Akzent-Verläufe */}
       <div className="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
         <Image
           src="/images/hero.jpg"
@@ -49,11 +50,8 @@ export default function Hero() {
 
       <div className="container-lb">
         <div className="max-w-3xl">
-          {/* hyphens-auto: "Neukundengewinnung" ist als inline-block sonst
-              nicht umbrechbar und ragt unter 409px Breite aus dem Bild.
-              Die Silbentrennung greift ueber lang="de" am <html>. */}
-          <h1 className="text-4xl font-extrabold leading-[1.08] tracking-tight text-white hyphens-auto sm:text-6xl">
-            {words.map((word, i) => (
+          <h1 className="text-4xl font-extrabold leading-[1.08] tracking-tight text-white sm:text-6xl">
+            {t.words.map((word, i) => (
               <span
                 key={word}
                 className="rise mr-[0.25em] inline-block"
@@ -63,13 +61,12 @@ export default function Hero() {
               </span>
             ))}
             {/* Ohne Shimmer: die Endlos-Animation malte die Headline in
-                jedem Frame neu. Der Verlauf bleibt, er bewegt sich nur nicht
-                mehr. pb haelt die Unterlaenge des "g" im bg-clip-Bereich. */}
+                jedem Frame neu. pb haelt die Unterlaenge im bg-clip-Bereich. */}
             <span
               className="rise inline-block bg-gradient-to-r from-accent via-accent-light to-accent bg-clip-text pb-[0.16em] text-transparent"
-              style={riseDelay(0.1 + words.length * 0.06)}
+              style={riseDelay(0.1 + t.words.length * 0.06)}
             >
-              Energievertriebe
+              {t.highlight}
             </span>
           </h1>
 
@@ -77,21 +74,19 @@ export default function Hero() {
             className="rise mt-6 max-w-2xl text-lg leading-relaxed text-slate-300 sm:text-xl"
             style={riseDelay(0.45)}
           >
-            Wir ticken anders – und das merkst du am Erfolg unserer Kunden. Wir
-            sind selbst im PV-, Wärmepumpen- und Energievertrieb aktiv. Was wir
-            dir raten, machen wir jeden Tag selbst.
+            {t.body}
           </p>
 
           <div
             className="rise mt-10 flex flex-col gap-4 sm:flex-row sm:items-center"
             style={riseDelay(0.6)}
           >
-            <Link href="/kontakt" className="btn-primary">
-              Kostenloses Erstgespräch
+            <Link href={`/${locale}/kontakt`} className="btn-primary">
+              {t.ctaPrimary}
               <ArrowRightIcon className="h-4 w-4" />
             </Link>
-            <Link href="/ueber-uns" className="btn-ghost">
-              Mehr über uns
+            <Link href={`/${locale}/ueber-uns`} className="btn-ghost">
+              {t.ctaSecondary}
             </Link>
           </div>
         </div>

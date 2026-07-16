@@ -2,18 +2,45 @@
 
 import { useState, type FormEvent } from "react";
 import { ArrowRightIcon } from "./icons";
+import type { Locale } from "@/lib/i18n/config";
+import type { Dictionary } from "@/lib/i18n/dictionaries";
 
 type Status = "idle" | "sending" | "success" | "error";
 
 /**
  * Client-Insel: nur das Formular selbst braucht Interaktivitaet.
- * Ueberschrift, Text und Kontaktdaten der Sektion bleiben statisch und
- * werden serverseitig gerendert – so muss der Browser nur diesen kleinen
- * Teil hydrieren statt der ganzen Sektion.
+ *
+ * Die API liefert nur Fehlercodes, keine fertigen Saetze – uebersetzt wird
+ * hier. Sonst bekaeme ein bulgarischer Besucher deutsche Fehlermeldungen.
  */
-export default function ContactForm() {
+export default function ContactForm({
+  locale,
+  t,
+}: {
+  locale: Locale;
+  t: Dictionary["contact"]["form"];
+}) {
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
+
+  const messageFor = (code: unknown) => {
+    switch (code) {
+      case "fields":
+        return t.errorFields;
+      case "toolong":
+        return t.errorTooLong;
+      case "email":
+        return t.errorEmail;
+      case "privacy":
+        return t.errorPrivacy;
+      case "notconfigured":
+        return t.errorNotConfigured;
+      case "send":
+        return t.errorSend;
+      default:
+        return t.errorGeneric;
+    }
+  };
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -34,12 +61,13 @@ export default function ContactForm() {
           nachricht: fd.get("nachricht"),
           datenschutz: fd.get("datenschutz") === "on",
           website: fd.get("website"),
+          locale,
         }),
       });
       const data = await res.json().catch(() => ({}));
 
       if (!res.ok) {
-        setError(data.error ?? "Da ist etwas schiefgelaufen. Bitte versuch es erneut.");
+        setError(messageFor(data.error));
         setStatus("error");
         return;
       }
@@ -47,7 +75,7 @@ export default function ContactForm() {
       form.reset();
       setStatus("success");
     } catch {
-      setError("Keine Verbindung zum Server. Bist du online?");
+      setError(t.errorOffline);
       setStatus("error");
     }
   }
@@ -55,13 +83,13 @@ export default function ContactForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-5" noValidate>
       <div className="grid gap-5 sm:grid-cols-2">
-        <Field id="vorname" label="Vorname" autoComplete="given-name" />
-        <Field id="nachname" label="Nachname" autoComplete="family-name" />
+        <Field id="vorname" label={t.firstName} autoComplete="given-name" />
+        <Field id="nachname" label={t.lastName} autoComplete="family-name" />
       </div>
-      <Field id="email" label="E-Mail" type="email" autoComplete="email" />
+      <Field id="email" label={t.email} type="email" autoComplete="email" />
       <div>
         <label htmlFor="nachricht" className="mb-2 block text-sm font-medium text-slate-200">
-          Nachricht
+          {t.message}
         </label>
         <textarea
           id="nachricht"
@@ -69,7 +97,7 @@ export default function ContactForm() {
           rows={4}
           required
           className="w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-slate-100 placeholder-slate-500 outline-none transition focus:border-accent/60 focus:ring-2 focus:ring-accent/20"
-          placeholder="Worum geht's? Erzähl kurz von deinem Vertrieb."
+          placeholder={t.messagePlaceholder}
         />
       </div>
 
@@ -81,17 +109,20 @@ export default function ContactForm() {
           className="mt-1 h-4 w-4 shrink-0 rounded border-white/20 bg-white/5 accent-accent"
         />
         <span>
-          Ich habe die{" "}
-          <a href="/datenschutz" className="text-accent-light underline hover:text-accent">
-            Datenschutzerklärung
+          {t.privacyBefore}{" "}
+          <a
+            href={`/${locale}/datenschutz`}
+            className="text-accent-light underline hover:text-accent"
+          >
+            {t.privacyLink}
           </a>{" "}
-          gelesen und stimme der Verarbeitung meiner Daten zu.
+          {t.privacyAfter}
         </span>
       </label>
 
       {/* Honeypot: für Menschen unsichtbar, Bots tragen hier ein. */}
       <div aria-hidden="true" className="absolute left-[-9999px] top-0 h-0 w-0 overflow-hidden">
-        <label htmlFor="website">Website (bitte frei lassen)</label>
+        <label htmlFor="website">{t.honeypot}</label>
         <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" />
       </div>
 
@@ -100,7 +131,7 @@ export default function ContactForm() {
         disabled={status === "sending"}
         className="btn-primary w-full disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
       >
-        {status === "sending" ? "Wird gesendet …" : "Nachricht senden"}
+        {status === "sending" ? t.sending : t.submit}
         {status !== "sending" && <ArrowRightIcon className="h-4 w-4" />}
       </button>
 
@@ -109,7 +140,7 @@ export default function ContactForm() {
           role="status"
           className="rounded-xl border border-accent/30 bg-accent/10 px-4 py-3 text-sm text-accent-light"
         >
-          Danke! Deine Nachricht ist da – wir melden uns innerhalb von 24 Stunden.
+          {t.success}
         </p>
       )}
 

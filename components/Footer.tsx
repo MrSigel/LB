@@ -1,6 +1,9 @@
 import Image from "next/image";
 import Link from "./AppLink";
 import BackToTop from "./BackToTop";
+import { site } from "@/lib/site";
+import type { Locale } from "@/lib/i18n/config";
+import type { Dictionary } from "@/lib/i18n/dictionaries";
 import {
   PhoneIcon,
   MailIcon,
@@ -14,19 +17,27 @@ import {
 
 const year = new Date().getFullYear();
 
-const legalLinks = [
-  { href: "/impressum", label: "Impressum" },
-  { href: "/datenschutz", label: "Datenschutz" },
-  { href: "/agb", label: "AGB & Widerruf" },
-];
-
 const socials = [
   { href: "https://www.facebook.com", label: "Facebook", Icon: FacebookIcon },
   { href: "https://www.instagram.com", label: "Instagram", Icon: InstagramIcon },
   { href: "https://www.google.com", label: "Google", Icon: GoogleIcon },
 ];
 
-export default function Footer() {
+export default function Footer({
+  locale,
+  t,
+  homeAria,
+}: {
+  locale: Locale;
+  t: Dictionary["footer"];
+  homeAria: string;
+}) {
+  const legalLinks = [
+    { href: `/${locale}/impressum`, label: t.imprint },
+    { href: `/${locale}/datenschutz`, label: t.privacy },
+    { href: `/${locale}/agb`, label: t.terms },
+  ];
+
   return (
     <footer className="relative overflow-hidden border-t border-white/10 bg-base-900">
       {/* Akzent-Schein oben – statischer Verlauf statt 120px-Blur. */}
@@ -38,7 +49,7 @@ export default function Footer() {
         <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
           {/* Marke */}
           <div>
-            <Link href="/" aria-label="Limit Breakers – Startseite">
+            <Link href={`/${locale}`} aria-label={homeAria}>
               <Image
                 src="/images/brand/logo-white.png"
                 alt="Limit Breakers"
@@ -48,8 +59,7 @@ export default function Footer() {
               />
             </Link>
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-slate-400">
-              Unternehmensberatung mit echter Umsetzung. Wir gewinnen Neukunden
-              für Energievertriebe – systematisch, planbar und skalierbar.
+              {t.description}
             </p>
             <div className="mt-6 flex gap-3">
               {socials.map(({ href, label, Icon }) => (
@@ -70,27 +80,27 @@ export default function Footer() {
           {/* Kontakt */}
           <div>
             <h3 className="text-sm font-semibold uppercase tracking-wider text-white">
-              Kontakt
+              {t.contact}
             </h3>
             <ul className="mt-4 space-y-3 text-sm text-slate-400">
               <li>
-                <a href="tel:+359895500755" className="flex items-center gap-3 transition-colors hover:text-white">
+                <a href={`tel:${site.phone}`} className="flex items-center gap-3 transition-colors hover:text-white">
                   <PhoneIcon className="h-4 w-4 text-accent" />
-                  +359 895 500 755
+                  {site.phoneDisplay}
                 </a>
               </li>
               <li>
-                <a href="mailto:info@limit-breakers.eu" className="flex items-center gap-3 transition-colors hover:text-white">
+                <a href={`mailto:${site.email}`} className="flex items-center gap-3 transition-colors hover:text-white">
                   <MailIcon className="h-4 w-4 text-accent" />
-                  info@limit-breakers.eu
+                  {site.email}
                 </a>
               </li>
               <li className="flex items-start gap-3">
                 <PinIcon className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
                 <span>
-                  Shipka 36
+                  {site.address.street}
                   <br />
-                  1504 Sofia
+                  {site.address.postalCode} {site.address.city}
                 </span>
               </li>
             </ul>
@@ -99,14 +109,14 @@ export default function Footer() {
           {/* Rechtliches */}
           <div>
             <h3 className="text-sm font-semibold uppercase tracking-wider text-white">
-              Rechtliches
+              {t.legal}
             </h3>
             <ul className="mt-4 space-y-3 text-sm text-slate-400">
               {legalLinks.map((link) => (
                 <li key={link.href}>
-                  <a href={link.href} className="transition-colors hover:text-white">
+                  <Link href={link.href} className="transition-colors hover:text-white">
                     {link.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -126,11 +136,11 @@ export default function Footer() {
               <span className="text-accent">©</span> {year}{" "}
               <span className="font-semibold text-slate-200">LIMITBREAKERS EOOD</span>
               <span className="mx-2 text-slate-700">·</span>
-              Alle Rechte vorbehalten.
+              {t.rights}
             </p>
 
             <div className="order-1 flex items-center gap-4 sm:order-2">
-              <BackToTop />
+              <BackToTop label={t.backToTop} aria={t.backToTopAria} />
               <span className="hidden h-5 w-px bg-white/10 sm:block" aria-hidden="true" />
               <a
                 href="https://www.limit-breakers.eu"

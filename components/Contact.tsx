@@ -1,7 +1,9 @@
 import Reveal from "./Reveal";
 import ContactForm from "./ContactForm";
 import { PhoneIcon, MailIcon, PinIcon, WhatsAppIcon } from "./icons";
-import { whatsapp } from "@/lib/site";
+import { site, whatsappHref } from "@/lib/site";
+import type { Locale } from "@/lib/i18n/config";
+import type { Dictionary } from "@/lib/i18n/dictionaries";
 
 type ContactDetail = {
   Icon: typeof PhoneIcon;
@@ -11,19 +13,31 @@ type ContactDetail = {
   external?: boolean;
 };
 
-const contactDetails: ContactDetail[] = [
-  { Icon: WhatsAppIcon, label: "WhatsApp: sofort schreiben", href: whatsapp.href, external: true },
-  { Icon: PhoneIcon, label: "+359 895 500 755", href: "tel:+359895500755" },
-  { Icon: MailIcon, label: "info@limit-breakers.eu", href: "mailto:info@limit-breakers.eu" },
-  { Icon: PinIcon, label: "Shipka 36, 1504 Sofia", href: null },
-];
-
 /**
  * Server-Komponente: Ueberschrift, Text und Kontaktdaten sind statisch.
  * Nur das Formular ist eine Client-Insel (ContactForm) und wird als
  * einziger Teil hydriert.
  */
-export default function Contact() {
+export default function Contact({
+  locale,
+  t,
+  whatsappMessage,
+}: {
+  locale: Locale;
+  t: Dictionary["contact"];
+  whatsappMessage: string;
+}) {
+  const contactDetails: ContactDetail[] = [
+    { Icon: WhatsAppIcon, label: t.whatsapp, href: whatsappHref(whatsappMessage), external: true },
+    { Icon: PhoneIcon, label: site.phoneDisplay, href: `tel:${site.phone}` },
+    { Icon: MailIcon, label: site.email, href: `mailto:${site.email}` },
+    {
+      Icon: PinIcon,
+      label: `${site.address.street}, ${site.address.postalCode} ${site.address.city}`,
+      href: null,
+    },
+  ];
+
   return (
     <section id="kontakt" className="section">
       <div className="container-lb">
@@ -33,11 +47,10 @@ export default function Contact() {
             <Reveal>
               <div>
                 <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                  Lass uns über deinen Vertrieb sprechen
+                  {t.title}
                 </h2>
                 <p className="mt-4 text-lg leading-relaxed text-slate-300">
-                  Im kostenlosen Erstgespräch schauen wir uns deinen Vertrieb an
-                  und zeigen dir konkret, wo Luft nach oben ist.
+                  {t.subtitle}
                 </p>
 
                 <ul className="mt-8 space-y-4">
@@ -70,7 +83,7 @@ export default function Contact() {
 
             {/* Rechte Spalte: Formular (Client-Insel) */}
             <Reveal delay={0.1}>
-              <ContactForm />
+              <ContactForm locale={locale} t={t.form} />
             </Reveal>
           </div>
         </div>

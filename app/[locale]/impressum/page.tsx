@@ -1,14 +1,28 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { isLocale } from "@/lib/i18n/config";
+import { getDictionary } from "@/lib/i18n/dictionaries";
 import LegalLayout from "@/components/LegalLayout";
-
-export const metadata: Metadata = {
-  title: "Impressum",
-  robots: { index: false, follow: true },
-};
-
-export default function ImpressumPage() {
+export async function generateMetadata({
+  params,
+}: {
+  params: { locale: string };
+}): Promise<Metadata> {
+  if (!isLocale(params.locale)) return {};
+  const d = await getDictionary(params.locale);
+  // Rechtstexte gehoeren nicht in den Suchindex.
+  return { title: d.meta.imprint.title, robots: { index: false, follow: true } };
+}
+export default async function Page({ params }: { params: { locale: string } }) {
+  if (!isLocale(params.locale)) notFound();
+  const locale = params.locale;
+  const d = await getDictionary(locale);
   return (
-    <LegalLayout title="Impressum">
+    <LegalLayout
+      locale={locale}
+      dict={d}
+      title={"Impressum"}
+    >
       <h2>Angaben gemäß § 5 DDG</h2>
       <address>
         Limitbreakers EOOD

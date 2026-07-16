@@ -1,4 +1,6 @@
 import { site, whatsapp } from "@/lib/site";
+import { htmlLang, type Locale } from "@/lib/i18n/config";
+import { getDictionary } from "@/lib/i18n/dictionaries";
 
 /**
  * Strukturierte Daten (JSON-LD, schema.org).
@@ -15,7 +17,10 @@ const json = (data: unknown) => ({
 });
 
 /** Unternehmen + Website. Gehoert auf jede Seite (steht im Layout). */
-export function OrganisationSchema() {
+export async function OrganisationSchema({ locale }: { locale: Locale }) {
+  const dict = await getDictionary(locale);
+  const description = dict.meta.home.description;
+
   const data = {
     "@context": "https://schema.org",
     "@graph": [
@@ -25,7 +30,7 @@ export function OrganisationSchema() {
         name: site.name,
         legalName: site.legalName,
         url: site.url,
-        description: site.description,
+        description,
         email: site.email,
         telephone: site.phone,
         vatID: site.vatId,
@@ -60,14 +65,14 @@ export function OrganisationSchema() {
             contactType: "sales",
             telephone: site.phone,
             email: site.email,
-            availableLanguage: ["de"],
+            availableLanguage: ["de", "en", "bg"],
             areaServed: site.areaServed,
           },
           {
             "@type": "ContactPoint",
             contactType: "customer support",
-            url: whatsapp.href,
-            availableLanguage: ["de"],
+            url: `https://wa.me/${whatsapp.number}`,
+            availableLanguage: ["de", "en", "bg"],
           },
         ],
         hasOfferCatalog: {
@@ -109,9 +114,9 @@ export function OrganisationSchema() {
         "@id": `${site.url}/#website`,
         url: site.url,
         name: site.name,
-        description: site.description,
+        description,
         publisher: { "@id": `${site.url}/#organization` },
-        inLanguage: "de-DE",
+        inLanguage: htmlLang[locale],
       },
     ],
   };

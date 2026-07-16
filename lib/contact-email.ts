@@ -12,6 +12,16 @@ export type ContactPayload = {
   nachricht: string;
 };
 
+/**
+ * Sprache, in der die Anfrage gestellt wurde – damit beim Antworten klar
+ * ist, welche Sprache der Interessent spricht.
+ */
+export const languageNames: Record<string, string> = {
+  de: "Deutsch",
+  en: "Englisch",
+  bg: "Bulgarisch",
+};
+
 /** Content-ID des eingebetteten Logos – muss zum Attachment in der Route passen. */
 export const LOGO_CID = "lb-logo";
 
@@ -43,7 +53,12 @@ const row = (label: string, value: string) => `
     </td>
   </tr>`;
 
-export function buildContactEmail(data: ContactPayload, receivedAt: Date) {
+export function buildContactEmail(
+  data: ContactPayload,
+  receivedAt: Date,
+  locale = "de"
+) {
+  const language = languageNames[locale] ?? locale;
   const name = `${data.vorname} ${data.nachname}`.trim();
   const stamp = new Intl.DateTimeFormat("de-DE", {
     dateStyle: "full",
@@ -56,8 +71,9 @@ export function buildContactEmail(data: ContactPayload, receivedAt: Date) {
   const text = [
     "Neue Kontaktanfrage über limit-breakers.eu",
     "",
-    `Name:    ${name}`,
-    `E-Mail:  ${data.email}`,
+    `Name:     ${name}`,
+    `E-Mail:   ${data.email}`,
+    `Sprache:  ${language}`,
     "",
     "Nachricht:",
     data.nachricht,
@@ -109,6 +125,7 @@ export function buildContactEmail(data: ContactPayload, receivedAt: Date) {
             "E-Mail",
             `<a href="mailto:${esc(data.email)}" style="color:${BRAND.accent};text-decoration:none;">${esc(data.email)}</a>`
           )}
+          ${row("Sprache der Anfrage", esc(language))}
 
           <tr>
             <td style="padding:18px 32px 4px;">
