@@ -1,11 +1,20 @@
 import Reveal from "./Reveal";
 import ContactForm from "./ContactForm";
-import { PhoneIcon, MailIcon, PinIcon, GlobeIcon } from "./icons";
+import { PhoneIcon, MailIcon, PinIcon, WhatsAppIcon } from "./icons";
+import { whatsapp } from "@/lib/site";
 
-const contactDetails = [
+type ContactDetail = {
+  Icon: typeof PhoneIcon;
+  label: string;
+  href: string | null;
+  /** Oeffnet in neuem Tab (WhatsApp Web/App). */
+  external?: boolean;
+};
+
+const contactDetails: ContactDetail[] = [
+  { Icon: WhatsAppIcon, label: "WhatsApp: sofort schreiben", href: whatsapp.href, external: true },
   { Icon: PhoneIcon, label: "+359 895 500 755", href: "tel:+359895500755" },
   { Icon: MailIcon, label: "info@limit-breakers.eu", href: "mailto:info@limit-breakers.eu" },
-  { Icon: GlobeIcon, label: "www.limit-breakers.eu", href: "https://www.limit-breakers.eu" },
   { Icon: PinIcon, label: "Shipka 36, 1504 Sofia", href: null },
 ];
 
@@ -32,11 +41,12 @@ export default function Contact() {
                 </p>
 
                 <ul className="mt-8 space-y-4">
-                  {contactDetails.map(({ Icon, label, href }) => (
+                  {contactDetails.map(({ Icon, label, href, external }) => (
                     <li key={label}>
                       {href ? (
                         <a
                           href={href}
+                          {...(external && { target: "_blank", rel: "noopener noreferrer" })}
                           className="group flex items-center gap-3 text-slate-200 transition-colors hover:text-white"
                         >
                           <span className="grid h-10 w-10 place-items-center rounded-lg bg-accent/10 text-accent transition-all duration-300 group-hover:scale-110 group-hover:bg-accent/20">

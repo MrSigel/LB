@@ -8,9 +8,10 @@ import Contact from "@/components/Contact";
 import { GrowthIcon, DealIcon, AutomationIcon } from "@/components/icons";
 
 export const metadata: Metadata = {
-  title: "Unsere Kompetenzen: Digitalisierung & Vertriebs-Automatisierung",
+  title: "Kompetenzen – Marketing, Vertrieb und Prozesse",
   description:
     "Marketing, Vertrieb und Prozesse aus einer Hand: Wir gewinnen planbar Neukunden für Energievertriebe – mit messbaren Kampagnen, systematischem Vertrieb und automatisierten Abläufen.",
+  alternates: { canonical: "/kompetenzen" },
 };
 
 const areas = [

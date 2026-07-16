@@ -5,9 +5,10 @@ import PageHeader from "@/components/PageHeader";
 import Contact from "@/components/Contact";
 
 export const metadata: Metadata = {
-  title: "Kontakt: Dein Weg zu planbarem Vertrieb | Limit Breakers",
+  title: "Kontakt – dein Weg zu planbarem Vertrieb",
   description:
-    "So findest du uns: Haben wir dein Interesse geweckt? Dann melde dich – Telefon +359 895 500 755, info@limit-breakers.eu, Shipka 36, 1504 Sofia.",
+    "Melde dich für ein kostenloses Erstgespräch: per WhatsApp, telefonisch unter +359 895 500 755 oder per E-Mail an info@limit-breakers.eu.",
+  alternates: { canonical: "/kontakt" },
 };
 
 export default function KontaktPage() {

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import LegalLayout from "@/components/LegalLayout";
 
 export const metadata: Metadata = {
-  title: "AGB – Limit Breakers",
+  title: "AGB & Widerruf",
   robots: { index: false, follow: true },
 };
 

@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
 import "./globals.css";
+import { site } from "@/lib/site";
+import WhatsAppButton from "@/components/WhatsAppButton";
+import { OrganisationSchema } from "@/components/StructuredData";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -8,38 +11,53 @@ const manrope = Manrope({
   display: "swap",
 });
 
+const title = "Neukundengewinnung für Energievertriebe | Limit Breakers";
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://limit-breakers.eu"),
-  title: "Unternehmensberatung für planbaren Vertrieb | Limit Breakers",
-  description:
-    "Wir sind eine Unternehmensberatung mit echter Umsetzung und helfen Energievertrieben, Neukunden systematisch, planbar und skalierbar zu gewinnen – mit Digitalisierung und Automatisierung im PV-, Wärmepumpen- sowie Strom- und Gas-Vertrieb.",
+  metadataBase: new URL(site.url),
+  title: {
+    default: title,
+    // Unterseiten setzen nur ihren eigenen Teil, die Marke haengt sich an.
+    template: "%s | Limit Breakers",
+  },
+  description: site.description,
   keywords: [
-    "Neukundengewinnung",
-    "Energievertrieb",
-    "Photovoltaik Leads",
-    "Wärmepumpe Leads",
-    "Strom Gas Vertrieb",
+    "Neukundengewinnung Energievertrieb",
+    "Photovoltaik Leads kaufen",
+    "Wärmepumpen Leads",
+    "Strom und Gas Vertrieb",
+    "Leadgenerierung Energie",
+    "Vertriebsberatung Photovoltaik",
     "Vertrieb Digitalisierung",
     "Vertrieb Automatisierung",
-    "Unternehmensberatung",
   ],
-  authors: [{ name: "Limit Breakers" }],
+  authors: [{ name: site.name, url: site.url }],
+  creator: site.name,
+  publisher: site.legalName,
+  alternates: { canonical: "/" },
   icons: {
     icon: "/images/brand/favicon.png",
     apple: "/images/brand/favicon.png",
   },
   openGraph: {
-    title: "Unternehmensberatung für planbaren Vertrieb | Limit Breakers",
-    description:
-      "Neukunden systematisch, planbar und skalierbar gewinnen – Digitalisierung und Automatisierung für den Energievertrieb. Beratung mit echter Umsetzung.",
-    url: "https://limit-breakers.eu",
-    siteName: "Limit Breakers",
+    title,
+    description: site.description,
+    url: site.url,
+    siteName: site.name,
     locale: "de_DE",
     type: "website",
+    images: [{ url: "/images/hero.jpg", width: 2400, height: 1348, alt: site.name }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description: site.description,
+    images: ["/images/hero.jpg"],
   },
   robots: {
     index: true,
     follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
   },
 };
 
@@ -86,8 +104,12 @@ export default function RootLayout({
     <html lang="de" className={manrope.variable}>
       <head>
         <script dangerouslySetInnerHTML={{ __html: revealScript }} />
+        <OrganisationSchema />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <WhatsAppButton />
+      </body>
     </html>
   );
 }

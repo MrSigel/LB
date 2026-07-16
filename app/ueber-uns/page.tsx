@@ -8,9 +8,11 @@ import Contact from "@/components/Contact";
 import { TargetIcon, AutomationIcon, GrowthIcon } from "@/components/icons";
 
 export const metadata: Metadata = {
-  title: "Wer wir sind: Beratung mit echter Umsetzung | Limit Breakers",
+  // Die Marke haengt das Template aus dem Root-Layout an.
+  title: "Wer wir sind – Beratung mit echter Umsetzung",
   description:
     "Wir ticken anders – und das sieht man am Erfolg unserer Kunden. Limit Breakers denkt strategisch und setzt um: geballte Kompetenz im Vertrieb erneuerbarer Energien.",
+  alternates: { canonical: "/ueber-uns" },
 };
 
 const pillars = [
