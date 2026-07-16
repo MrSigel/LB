@@ -29,9 +29,9 @@ const socials = [
 export default function Footer() {
   return (
     <footer className="relative overflow-hidden border-t border-white/10 bg-base-900">
-      {/* Premium-Akzent-Glow oben */}
+      {/* Akzent-Schein oben – statischer Verlauf statt 120px-Blur. */}
       <div
-        className="pointer-events-none absolute -top-24 left-1/2 h-48 w-[80%] -translate-x-1/2 rounded-full bg-accent/10 blur-[120px]"
+        className="glow-accent-soft pointer-events-none absolute -top-24 left-1/2 h-48 w-[80%] -translate-x-1/2 rounded-full"
         aria-hidden="true"
       />
       <div className="container-lb relative py-14">

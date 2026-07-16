@@ -98,10 +98,14 @@ export default function Header() {
 
   return (
     <>
+      {/* Kein backdrop-blur: der Header ist fixed ueber scrollendem Inhalt,
+          der Filter muesste also bei jedem Scroll-Frame neu berechnet werden.
+          Auf Handy-GPUs (besonders Safari) ist das dauerhaft teuer. Ein fast
+          deckender Hintergrund sieht praktisch gleich aus und kostet nichts. */}
       <header
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
           scrolled || open
-            ? "border-b border-white/10 bg-base-900/90 backdrop-blur-md"
+            ? "border-b border-white/10 bg-base-900/95"
             : "border-b border-transparent"
         }`}
       >
@@ -172,7 +176,7 @@ export default function Header() {
           ref={panelRef}
           id="mobile-menu"
           aria-label="Hauptnavigation mobil"
-          className={`grid overflow-hidden border-white/10 bg-base-900/95 backdrop-blur-md transition-all duration-300 ease-out md:hidden ${
+          className={`grid overflow-hidden border-white/10 bg-base-900 transition-all duration-300 ease-out md:hidden ${
             open
               ? "visible grid-rows-[1fr] border-t opacity-100"
               : "invisible grid-rows-[0fr] border-t-0 opacity-0"

@@ -96,6 +96,28 @@ body {
 
 /* Section-Container */
 @layer components {
+  /* Akzent-Schein als statischer Radial-Verlauf.
+     Vorher: ein Div mit blur-[120px], das per Keyframe skaliert wurde.
+     Das zwingt den Browser, den Weichzeichner in jedem Frame neu zu
+     rastern – auf einer Handy-GPU dauerhaft teuer. Der Verlauf sieht
+     praktisch gleich aus und kostet nichts. */
+  .glow-accent {
+    background-image: radial-gradient(
+      closest-side,
+      rgba(160, 28, 37, 0.28),
+      rgba(160, 28, 37, 0.1) 55%,
+      transparent 100%
+    );
+  }
+  .glow-accent-soft {
+    background-image: radial-gradient(
+      closest-side,
+      rgba(160, 28, 37, 0.18),
+      rgba(160, 28, 37, 0.06) 55%,
+      transparent 100%
+    );
+  }
+
   /* Breite wächst gestaffelt mit, damit auf großen Schirmen nicht
      übermäßig Rand entsteht. Obergrenze bleibt gesetzt, sonst werden
      Fließtextzeilen zu lang zum Lesen. */
@@ -130,8 +152,12 @@ body {
     @apply rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-sm text-slate-300 transition-all duration-200 hover:-translate-y-0.5 hover:border-accent/40 hover:bg-accent/[0.08] hover:text-white;
   }
 
+  /* Ohne backdrop-blur: Die Karten liegen auf einem deckenden Hintergrund,
+     es gibt also nichts zum Durchscheinen – der Filter war rein dekorativ.
+     Auf der Startseite sind es 14 Karten, also 14 zusaetzliche
+     Compositing-Layer, die eine Handy-GPU sinnlos beschaeftigt haben. */
   .card {
-    @apply rounded-2xl border border-white/10 bg-white/[0.03] p-8 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-accent/40 hover:shadow-2xl hover:shadow-black/40;
+    @apply rounded-2xl border border-white/10 bg-white/[0.03] p-8 transition-all duration-300 hover:-translate-y-1.5 hover:border-accent/40 hover:shadow-2xl hover:shadow-black/40;
   }
 
   /* Rechtstexte: Typografie zentral, damit die Seiten selbst lesbar bleiben.

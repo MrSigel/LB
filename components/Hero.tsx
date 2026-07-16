@@ -41,18 +41,10 @@ export default function Hero() {
         <div className="absolute inset-0 bg-gradient-to-r from-base-900 via-base-900/75 to-base-900/20" />
         <div className="absolute inset-0 bg-gradient-to-t from-base-900/80 via-transparent to-base-900/30" />
         <div className="absolute inset-0 bg-grid-fade" />
-        <div className="absolute -left-24 top-10 h-[420px] w-[420px] rounded-full bg-accent/25 blur-[120px] animate-gradient-float" />
-        <div className="absolute -right-20 bottom-0 h-[460px] w-[460px] rounded-full bg-accent/15 blur-[130px] animate-gradient-float-slow" />
-        <div
-          className="absolute inset-0 opacity-[0.05]"
-          style={{
-            backgroundImage:
-              "linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)",
-            backgroundSize: "64px 64px",
-            maskImage:
-              "radial-gradient(ellipse at 50% 0%, black 40%, transparent 75%)",
-          }}
-        />
+        {/* Akzent-Schein: statische Radial-Verlaeufe statt animierter
+            Blur-Flaechen – gleiche Optik, keine GPU-Last pro Frame. */}
+        <div className="glow-accent absolute -left-24 top-10 h-[420px] w-[420px] rounded-full" />
+        <div className="glow-accent-soft absolute -right-20 bottom-0 h-[460px] w-[460px] rounded-full" />
       </div>
 
       <div className="container-lb">
@@ -70,8 +62,11 @@ export default function Hero() {
                 {word}
               </span>
             ))}
+            {/* Ohne Shimmer: die Endlos-Animation malte die Headline in
+                jedem Frame neu. Der Verlauf bleibt, er bewegt sich nur nicht
+                mehr. pb haelt die Unterlaenge des "g" im bg-clip-Bereich. */}
             <span
-              className="rise inline-block bg-gradient-to-r from-accent via-accent-light to-accent bg-[length:200%_auto] bg-clip-text pb-[0.16em] text-transparent animate-text-shimmer"
+              className="rise inline-block bg-gradient-to-r from-accent via-accent-light to-accent bg-clip-text pb-[0.16em] text-transparent"
               style={riseDelay(0.1 + words.length * 0.06)}
             >
               Energievertriebe

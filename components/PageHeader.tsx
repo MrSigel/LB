@@ -12,8 +12,9 @@ export default function PageHeader({
     <section className="relative overflow-hidden pb-14 pt-32 sm:pb-20 sm:pt-40">
       <div className="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
         <div className="absolute inset-0 bg-grid-fade" />
-        <div className="absolute -left-24 top-0 h-[380px] w-[380px] rounded-full bg-accent/20 blur-[120px] animate-gradient-float" />
-        <div className="absolute -right-16 top-10 h-[320px] w-[320px] rounded-full bg-accent/10 blur-[120px] animate-gradient-float-slow" />
+        {/* Statische Verlaeufe statt animierter Blur-Flaechen (siehe Hero). */}
+        <div className="glow-accent absolute -left-24 top-0 h-[380px] w-[380px] rounded-full" />
+        <div className="glow-accent-soft absolute -right-16 top-10 h-[320px] w-[320px] rounded-full" />
       </div>
 
       <div className="container-lb">

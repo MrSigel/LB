@@ -14,7 +14,7 @@ export default function BreakBanner() {
       <div className="container-lb">
         <Reveal>
           <div className="relative overflow-hidden rounded-3xl border border-accent/20 bg-gradient-to-br from-base-800 to-base-900 p-8 sm:p-14">
-            <div className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-accent/15 blur-[100px]" />
+            <div className="glow-accent-soft pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full" />
             <div className="relative">
               <h2 className="max-w-2xl text-3xl font-bold tracking-tight text-white sm:text-4xl">
                 Miss uns an unseren Ergebnissen

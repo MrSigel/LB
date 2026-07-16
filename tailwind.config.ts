@@ -33,41 +33,11 @@ const config: Config = {
         "grid-fade":
           "radial-gradient(circle at 50% 0%, rgba(160,28,37,0.18), transparent 60%)",
       },
-      keyframes: {
-        "gradient-float": {
-          "0%, 100%": { transform: "translate(0, 0) scale(1)" },
-          "50%": { transform: "translate(20px, -30px) scale(1.08)" },
-        },
-        "gradient-float-slow": {
-          "0%, 100%": { transform: "translate(0, 0) scale(1)" },
-          "50%": { transform: "translate(-30px, 20px) scale(1.12)" },
-        },
-        "text-shimmer": {
-          "0%": { backgroundPosition: "0% center" },
-          "100%": { backgroundPosition: "-200% center" },
-        },
-        float: {
-          "0%, 100%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(-6px)" },
-        },
-        "pulse-ring": {
-          "0%": { boxShadow: "0 0 0 0 rgba(160,28,37,0.45)" },
-          "70%": { boxShadow: "0 0 0 12px rgba(160,28,37,0)" },
-          "100%": { boxShadow: "0 0 0 0 rgba(160,28,37,0)" },
-        },
-        "scroll-hint": {
-          "0%, 100%": { transform: "translateY(0)", opacity: "0.4" },
-          "50%": { transform: "translateY(6px)", opacity: "1" },
-        },
-      },
-      animation: {
-        "gradient-float": "gradient-float 14s ease-in-out infinite",
-        "gradient-float-slow": "gradient-float-slow 18s ease-in-out infinite",
-        "text-shimmer": "text-shimmer 4s linear infinite",
-        float: "float 4s ease-in-out infinite",
-        "pulse-ring": "pulse-ring 2.4s ease-out infinite",
-        "scroll-hint": "scroll-hint 1.8s ease-in-out infinite",
-      },
+      // Die frueheren Endlos-Animationen (gradient-float, text-shimmer,
+      // float, pulse-ring, scroll-hint) sind entfernt. Sie liefen dauerhaft
+      // mit "infinite" und zwangen die GPU – teils auf 120px-Blur-Flaechen –
+      // zu staendigem Neuzeichnen. Die Einblend-Animationen der Seite stehen
+      // als Keyframes in globals.css und laufen einmalig.
     },
   },
   plugins: [],
