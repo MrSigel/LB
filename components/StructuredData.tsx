@@ -119,36 +119,3 @@ export function OrganisationSchema() {
   return <script type="application/ld+json" dangerouslySetInnerHTML={json(data)} />;
 }
 
-/** Brotkrumen-Pfad fuer Unterseiten. */
-export function BreadcrumbSchema({ items }: { items: { name: string; path: string }[] }) {
-  const data = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Startseite", item: site.url },
-      ...items.map((item, i) => ({
-        "@type": "ListItem",
-        position: i + 2,
-        name: item.name,
-        item: `${site.url}${item.path}`,
-      })),
-    ],
-  };
-
-  return <script type="application/ld+json" dangerouslySetInnerHTML={json(data)} />;
-}
-
-/** Fragen und Antworten – Basis fuer Rich Results und KI-Antworten. */
-export function FaqSchema({ items }: { items: { q: string; a: string }[] }) {
-  const data = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: items.map((item) => ({
-      "@type": "Question",
-      name: item.q,
-      acceptedAnswer: { "@type": "Answer", text: item.a },
-    })),
-  };
-
-  return <script type="application/ld+json" dangerouslySetInnerHTML={json(data)} />;
-}

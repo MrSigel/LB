@@ -9,7 +9,6 @@ import BreakBanner from "@/components/BreakBanner";
 import Testimonials from "@/components/Testimonials";
 import Team from "@/components/Team";
 import LimitSkills from "@/components/LimitSkills";
-import Faq from "@/components/Faq";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 
@@ -28,7 +27,6 @@ export default function Home() {
         <Testimonials />
         <Team />
         <LimitSkills />
-        <Faq />
         <Contact />
       </main>
       <Footer />
