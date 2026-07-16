@@ -11,7 +11,7 @@ export default function ImpressumPage() {
     <LegalLayout title="Impressum">
       <h2>Angaben gemäß § 5 DDG</h2>
       <address>
-        Limitbreakers OOD
+        Limitbreakers EOOD
         <br />
         Dr. Maya Neidenowa
         <br />

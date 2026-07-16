@@ -12,7 +12,7 @@ export default function DatenschutzPage() {
       <h2>Verantwortliche Stelle</h2>
       <p>Verantwortliche Stelle im Sinne der Datenschutzgesetze ist:</p>
       <address>
-        Limitbreakers OOD
+        Limitbreakers EOOD
         <br />
         Dr. Maya Neidenowa
         <br />

@@ -12,7 +12,7 @@ export const siteUrl = (
 
 export const site = {
   name: "Limit Breakers",
-  legalName: "Limitbreakers OOD",
+  legalName: "Limitbreakers EOOD",
   url: siteUrl,
   description:
     "Wir gewinnen Neukunden für Energievertriebe – systematisch, planbar und messbar. Beratung mit echter Umsetzung im PV-, Wärmepumpen- sowie Strom- und Gas-Vertrieb.",

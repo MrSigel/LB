@@ -124,7 +124,7 @@ export default function Footer() {
           <div className="flex flex-col items-center gap-6 sm:flex-row sm:justify-between">
             <p className="order-2 text-center text-sm text-slate-500 sm:order-1 sm:text-left">
               <span className="text-accent">©</span> {year}{" "}
-              <span className="font-semibold text-slate-200">LIMITBREAKERS OOD</span>
+              <span className="font-semibold text-slate-200">LIMITBREAKERS EOOD</span>
               <span className="mx-2 text-slate-700">·</span>
               Alle Rechte vorbehalten.
             </p>
