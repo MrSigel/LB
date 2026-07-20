@@ -44,9 +44,9 @@ const de = {
   },
 
   about: {
-    title: "Beratung mit echter Umsetzung",
+    title: "Unternehmensberatung mit echter Umsetzung",
     imageAlt: "Zwei Kollegen im Beratungsgespräch an einem Stehtisch",
-    p1: "Wir sind eine Beratung, die selbst mit anpackt. Wir helfen dir, planbar Neukunden zu gewinnen – ohne Zufall, ohne Bauchgefühl. Im PV- und Wärmepumpen-Geschäft und im Strom- und Gasvertrieb sind wir selbst aktiv. Wir wissen also aus eigener Erfahrung, was funktioniert und was nicht.",
+    p1: "Wir sind eine Unternehmensberatung, die selbst mit anpackt. Wir helfen dir, planbar Neukunden zu gewinnen – ohne Zufall, ohne Bauchgefühl. Im PV- und Wärmepumpen-Geschäft und im Strom- und Gasvertrieb sind wir selbst aktiv. Wir wissen also aus eigener Erfahrung, was funktioniert und was nicht.",
     p2: "Wir bringen Struktur in deinen Vertrieb und automatisieren alles, was sich wiederholt. Online und offline greifen ineinander – vom ersten Lead bis zum Abschluss. Dein Team arbeitet fokussierter, und du siehst jederzeit, was es bringt.",
     quote: "Struktur, Effizienz und messbares Wachstum – aus eigener Praxis, nicht aus dem Lehrbuch.",
   },
@@ -201,7 +201,7 @@ const de = {
   },
 
   aboutPage: {
-    title: "Wer wir sind – Beratung mit echter Umsetzung",
+    title: "Wer wir sind – Unternehmensberatung mit echter Umsetzung",
     subtitle: "Wir ticken anders – und das sieht man am Erfolg unserer Kunden. Wir denken strategisch, bleiben aber nicht in Analysen und Konzepten stecken. Wir setzen um.",
     intro1: "Wir bewegen Menschen – online wie offline – und das in ganz Europa. Gemeinsam implementieren wir wirkungsvolle Lösungen entlang der gesamten Wertschöpfungskette. So arbeiten deine Mitarbeiter motivierter und produktiver, während du deine Erfolge jederzeit klar und transparent messen kannst.",
     intro2: "Erlebe geballte Kompetenz im Vertrieb erneuerbarer Energien – von PV- und Wärmepumpen-Leads bis hin zu Strom- und Gasabschlüssen.",
@@ -286,10 +286,10 @@ const de = {
   meta: {
     home: {
       title: "Neukundengewinnung für Energievertriebe",
-      description: "Wir gewinnen Neukunden für Energievertriebe – systematisch, planbar und messbar. Beratung mit echter Umsetzung im PV-, Wärmepumpen- sowie Strom- und Gas-Vertrieb.",
+      description: "Wir gewinnen Neukunden für Energievertriebe – systematisch, planbar und messbar. Unternehmensberatung mit echter Umsetzung im PV-, Wärmepumpen- sowie Strom- und Gas-Vertrieb.",
     },
     about: {
-      title: "Wer wir sind – Beratung mit echter Umsetzung",
+      title: "Wer wir sind – Unternehmensberatung mit echter Umsetzung",
       description: "Wir ticken anders – und das sieht man am Erfolg unserer Kunden. Limit Breakers denkt strategisch und setzt um: geballte Kompetenz im Vertrieb erneuerbarer Energien.",
     },
     competencies: {

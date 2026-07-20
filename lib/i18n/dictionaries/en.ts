@@ -42,9 +42,9 @@ const en: Dictionary = {
   },
 
   about: {
-    title: "Consulting that actually delivers",
+    title: "Management consulting that actually delivers",
     imageAlt: "Two colleagues in conversation at a standing desk",
-    p1: "We are a consultancy that gets its hands dirty. We help you win customers predictably – no luck, no guesswork. We are active in solar, heat pumps, electricity and gas ourselves. So we know from experience what works and what doesn't.",
+    p1: "We are a management consultancy that gets its hands dirty. We help you win customers predictably – no luck, no guesswork. We are active in solar, heat pumps, electricity and gas ourselves. So we know from experience what works and what doesn't.",
     p2: "We bring structure to your sales and automate everything that repeats. Online and offline work together – from the first lead to the closed deal. Your team stays focused, and you can see what it's worth at any time.",
     quote: "Structure, efficiency and measurable growth – from real practice, not from a textbook.",
   },
@@ -193,7 +193,7 @@ const en: Dictionary = {
   },
 
   aboutPage: {
-    title: "Who we are – consulting that actually delivers",
+    title: "Who we are – management consulting that actually delivers",
     subtitle: "We do things differently – and you can see it in our clients' results. We think strategically, but we don't get stuck in analyses and concepts. We execute.",
     intro1: "We move people – online and offline – right across Europe. Together we implement effective solutions along the entire value chain. Your people work with more motivation and get more done, while you can measure your results clearly at any time.",
     intro2: "Experience concentrated expertise in renewable energy sales – from solar and heat pump leads through to electricity and gas contracts.",
@@ -281,7 +281,7 @@ const en: Dictionary = {
       description: "We win customers for energy sales teams – systematically, predictably and measurably. Consulting that actually delivers in solar, heat pump, electricity and gas sales.",
     },
     about: {
-      title: "Who we are – consulting that actually delivers",
+      title: "Who we are – management consulting that actually delivers",
       description: "We do things differently – and you can see it in our clients' results. Limit Breakers thinks strategically and executes: concentrated expertise in renewable energy sales.",
     },
     competencies: {

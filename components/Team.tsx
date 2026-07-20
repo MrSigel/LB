@@ -5,7 +5,7 @@ import type { Dictionary } from "@/lib/i18n/dictionaries";
 /** Namen und Fotos sind fest, nur die Rollenbezeichnung wird uebersetzt. */
 const members = [
   { name: "Lisa Tuana", role: "accounting", photo: "/images/team/lisa-tuana.jpg" },
-  { name: "Sonja Liebel", role: "backoffice", photo: "/images/team/sonja-liebel.jpg" },
+  { name: "Sonja Ludwig", role: "backoffice", photo: "/images/team/sonja-liebel.jpg" },
   { name: "Marc Klaus", role: "sales", photo: "/images/team/marc-klaus.jpg" },
   { name: "Joachim Schmitz", role: "sales", photo: "/images/team/joachim-schmitz.jpg" },
 ] as const;
