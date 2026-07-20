@@ -37,3 +37,7 @@ next-env.d.ts
 /sonja.jpg
 /limit-breakers-logo.png
 /limit-breakers-logo.svg
+
+# Temp/Stray
+/live.html
+/file.jpg
